@@ -53,8 +53,7 @@ public class FlowableRestController {
   public void setStatus(@RequestBody TaskStatusRepresentation taskStatusRepresentation){
     String taskId = taskStatusRepresentation.getId();
     String status = taskStatusRepresentation.getStatus();
-    flowableService.setStatus(taskId, status);
-
+    flowableService.setStatus(status, taskId);
   }
 
 //  Endpoint to create a user task

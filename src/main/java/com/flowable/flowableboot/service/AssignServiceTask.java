@@ -2,13 +2,10 @@ package com.flowable.flowableboot.service;
 
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Scanner;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
-import org.flowable.engine.impl.delegate.TriggerableActivityBehavior;
-import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
