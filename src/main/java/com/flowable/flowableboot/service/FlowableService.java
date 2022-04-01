@@ -35,7 +35,6 @@ public class FlowableService {
     Map<String, Object> variables = new HashMap<String, Object>();
     variables.put("person", person);
     runtimeService.startProcessInstanceByKey("multiTaskProcess", variables);
-//    runtimeService.startProcessInstanceByKey("multiTaskProcess");
   }
 
 // Method to get tasks by assignee name
@@ -54,8 +53,8 @@ public class FlowableService {
 
   public void processInstanceDetails(String processId){
     System.out.println(String.format("processId: %s", processId));
-//    Suspend all process instances
-//    runtimeService.suspendProcessInstanceById(processId);
+    // Suspend all process instances
+    //    runtimeService.suspendProcessInstanceById(processId);
   }
 
 //  Method to add a new user

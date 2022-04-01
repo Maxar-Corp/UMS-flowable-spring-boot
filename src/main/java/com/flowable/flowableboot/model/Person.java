@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+//Person entity class
+// Entity class that is annotated as having
+//  the ability to represent objects in the database
 @Entity
 public
 class Person {
