@@ -26,3 +26,6 @@
 - Upon sending the curl request the tasks endpoint should return an empty list of tasks
     - curl http://localhost:8080/tasks\?assignee\=PEDROSORTO
     - []
+
+## API Documentation
+The Swagger API documentation generated is located at:  `http:/localhost:8080/swagger-ui.html`
