@@ -1,11 +1,14 @@
 package com.flowable.flowableboot;
 
 import com.flowable.flowableboot.service.FlowableService;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
 
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @SpringBootApplication(proxyBeanMethods = false)
@@ -16,8 +19,18 @@ public class FlowablebootApplication {
 	}
 
 	@Bean
+	public OpenAPI springShopOpenAPI() {
+		return new OpenAPI()
+				.info(new Info().title("Workflow Engine API")
+						.description("Example for workflow engine api interactions")
+						.version("v0.0.1"));
+	}
+
+	@Bean
 	public CommandLineRunner init(final FlowableService flowableService) {
 		return strings -> flowableService.createDemoUsers();
 	}
+
+
 }
 
