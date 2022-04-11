@@ -22,9 +22,7 @@ import java.util.List;
 @RestController
 public class FlowableRestController {
 
-  @Autowired
   private final FlowableService flowableService;
-  @Autowired
   private final ReceiveTask receiveTask;
 
   public FlowableRestController(
