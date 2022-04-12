@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef" exporter="Flowable Open Source Modeler" exporterVersion="6.7.2">
+  <process id="UMSHappyPath" name="UMS Simple Happy Path" isExecutable="true">
+    <documentation>A simplified version of the UMS happy path, does not include inclusive gates with email notifications</documentation>
+
+    <startEvent id="startEvent" name="Task Form Entered"
+      flowable:formFieldValidation="true">
+    </startEvent>
+
+    <serviceTask id="leadReceiveTask" name="Task Added"
+      flowable:delegateExpression="${leadReceiveServiceTask}">
+    </serviceTask>
+
+    <userTask id="leadAssignTask" name="Lead Assigns Task"
+      flowable:formFieldValidation="true"
+      flowable:assignee="${assigner.username}">
+    </userTask>
+
+    <serviceTask id="assigneeReceiveTask" name="Task Sent to Assignee"
+      flowable:delegateExpression="${assigneeReceiveServiceTask}">
+    </serviceTask>
+
+    <sequenceFlow id="sid-36BFDAB5-C12E-4455-857F-F1314FD314D9"
+      sourceRef="startEvent" targetRef="leadReceiveTask">
+    </sequenceFlow>
+    <sequenceFlow id="sid-3F504A7F-9658-4902-AD2D-24C328AC2415"
+      sourceRef="leadReceiveTask" targetRef="leadAssignTask">
+    </sequenceFlow>
+
+    <userTask id="assignSetStatusToIP" name="Assignee Set Status to In Progress"
+      flowable:formFieldValidation="true"
+      flowable:assignee="${assignee.username}">
+    </userTask>
+
+    <userTask id="assignSetStatusToTR" name="Assignee Set Status to To Review"
+      flowable:formFieldValidation="true"
+      flowable:assignee="${assignee.username}">
+    </userTask>
+
+    <sequenceFlow id="sid-6525C03D-2457-486F-9F48-DEAD3BAE4E3F"
+      sourceRef="assignSetStatusToIP" targetRef="assignSetStatusToTR">
+    </sequenceFlow>
+
+    <userTask id="leadSetStatus" name="Lead Set Task to Complete"
+      flowable:formFieldValidation="true"
+      flowable:assignee="${assigner.username}">
+    </userTask>
+
+    <endEvent id="sid-A80ACAC5-5D98-43E1-9733-2BF6892A4D4D" name="Task complete"></endEvent>
+
+    <sequenceFlow id="sid-00A4E781-94DB-43CA-897C-B733F375D4FA"
+      sourceRef="leadAssignTask" targetRef="assigneeReceiveTask">
+    </sequenceFlow>
+    <sequenceFlow id="sid-A4E49B6E-CDC7-4053-B74A-07F24A1D6527"
+      sourceRef="assigneeReceiveTask" targetRef="assignSetStatusToIP">
+    </sequenceFlow>
+
+    <exclusiveGateway id="status"></exclusiveGateway>
+
+    <sequenceFlow id="sid-D62E377B-D9DF-4DDD-A505-24E3FF73A15E"
+      sourceRef="assignSetStatusToTR" targetRef="leadSetStatus">
+    </sequenceFlow>
+    <sequenceFlow id="sid-08AC6BA7-D5B9-40B6-BC47-507A58E8ACE0"
+      sourceRef="leadSetStatus" targetRef="status">
+    </sequenceFlow>
+
+    <sequenceFlow id="sid-2739F20F-3522-4C45-BE7A-0E6281BB5FF6"
+      sourceRef="status" targetRef="sid-A80ACAC5-5D98-43E1-9733-2BF6892A4D4D">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${status=="complete"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-DC04B80F-AF6C-4077-B001-DABD90EFCD57"
+      sourceRef="status" targetRef="assignSetStatusToTR">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${status=="incomplete"}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_UMSHappyPath">
+    <bpmndi:BPMNPlane bpmnElement="UMSHappyPath" id="BPMNPlane_UMSHappyPath">
+      <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
+        <omgdc:Bounds height="30.0" width="30.0" x="30.0" y="150.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="leadReceiveTask" id="BPMNShape_leadReceiveTask">
+        <omgdc:Bounds height="80.0" width="100.0" x="105.0" y="125.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="leadAssignTask" id="BPMNShape_leadAssignTask">
+        <omgdc:Bounds height="80.0" width="100.0" x="255.0" y="125.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="assigneeReceiveTask" id="BPMNShape_assigneeReceiveTask">
+        <omgdc:Bounds height="80.0" width="100.0" x="405.0" y="125.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="assignSetStatusToIP" id="BPMNShape_assignSetStatusToIP">
+        <omgdc:Bounds height="80.0" width="100.0" x="555.0" y="125.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="assignSetStatusToTR" id="BPMNShape_assignSetStatusToTR">
+        <omgdc:Bounds height="80.0" width="100.0" x="705.0" y="125.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="leadSetStatus" id="BPMNShape_leadSetStatus">
+        <omgdc:Bounds height="78.41129349512892" width="100.00252129649039" x="855.0" y="125.79435325243554"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-A80ACAC5-5D98-43E1-9733-2BF6892A4D4D" id="BPMNShape_sid-A80ACAC5-5D98-43E1-9733-2BF6892A4D4D">
+        <omgdc:Bounds height="28.0" width="28.0" x="1110.0" y="151.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="status" id="BPMNShape_status">
+        <omgdc:Bounds height="40.0" width="40.0" x="1005.0" y="145.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-00A4E781-94DB-43CA-897C-B733F375D4FA" id="BPMNEdge_sid-00A4E781-94DB-43CA-897C-B733F375D4FA" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="354.95000000000005" y="165.0"></omgdi:waypoint>
+        <omgdi:waypoint x="405.0" y="165.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-A4E49B6E-CDC7-4053-B74A-07F24A1D6527" id="BPMNEdge_sid-A4E49B6E-CDC7-4053-B74A-07F24A1D6527" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="504.9499999999581" y="165.0"></omgdi:waypoint>
+        <omgdi:waypoint x="555.0" y="165.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-D62E377B-D9DF-4DDD-A505-24E3FF73A15E" id="BPMNEdge_sid-D62E377B-D9DF-4DDD-A505-24E3FF73A15E" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="50.00126064824519" flowable:targetDockerY="39.20564674756446">
+        <omgdi:waypoint x="804.9499999999584" y="165.0"></omgdi:waypoint>
+        <omgdi:waypoint x="855.0" y="165.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-6525C03D-2457-486F-9F48-DEAD3BAE4E3F" id="BPMNEdge_sid-6525C03D-2457-486F-9F48-DEAD3BAE4E3F" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="654.9499999999581" y="165.0"></omgdi:waypoint>
+        <omgdi:waypoint x="705.0" y="165.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-08AC6BA7-D5B9-40B6-BC47-507A58E8ACE0" id="BPMNEdge_sid-08AC6BA7-D5B9-40B6-BC47-507A58E8ACE0" flowable:sourceDockerX="50.00126064824519" flowable:sourceDockerY="39.20564674756446" flowable:targetDockerX="20.0" flowable:targetDockerY="20.0">
+        <omgdi:waypoint x="954.9525212964663" y="165.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1005.0" y="165.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-DC04B80F-AF6C-4077-B001-DABD90EFCD57" id="BPMNEdge_sid-DC04B80F-AF6C-4077-B001-DABD90EFCD57" flowable:sourceDockerX="20.5" flowable:sourceDockerY="20.5" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="1025.5" y="184.44239566613166"></omgdi:waypoint>
+        <omgdi:waypoint x="1025.5" y="290.0"></omgdi:waypoint>
+        <omgdi:waypoint x="755.0" y="290.0"></omgdi:waypoint>
+        <omgdi:waypoint x="755.0" y="204.95"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-2739F20F-3522-4C45-BE7A-0E6281BB5FF6" id="BPMNEdge_sid-2739F20F-3522-4C45-BE7A-0E6281BB5FF6" flowable:sourceDockerX="20.5" flowable:sourceDockerY="20.5" flowable:targetDockerX="14.0" flowable:targetDockerY="14.0">
+        <omgdi:waypoint x="1044.536926605502" y="165.40306122448976"></omgdi:waypoint>
+        <omgdi:waypoint x="1110.000173953876" y="165.07081148673626"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-36BFDAB5-C12E-4455-857F-F1314FD314D9" id="BPMNEdge_sid-36BFDAB5-C12E-4455-857F-F1314FD314D9" flowable:sourceDockerX="28.7265625" flowable:sourceDockerY="15.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="87.40311108873489" y="165.0"></omgdi:waypoint>
+        <omgdi:waypoint x="105.0" y="165.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-3F504A7F-9658-4902-AD2D-24C328AC2415" id="BPMNEdge_sid-3F504A7F-9658-4902-AD2D-24C328AC2415" flowable:sourceDockerX="93.20703125" flowable:sourceDockerY="40.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="204.95" y="165.0"></omgdi:waypoint>
+        <omgdi:waypoint x="255.0" y="165.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

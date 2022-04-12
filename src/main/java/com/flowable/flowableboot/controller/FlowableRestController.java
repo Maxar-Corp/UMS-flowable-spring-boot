@@ -5,10 +5,12 @@ import com.flowable.flowableboot.model.ProcessInstanceRepresentation;
 import com.flowable.flowableboot.model.StartProcessRepresentation;
 import com.flowable.flowableboot.model.TaskRepresentation;
 import com.flowable.flowableboot.model.TaskStatusRepresentation;
+import com.flowable.flowableboot.model.UserTaskRepresentation;
 import com.flowable.flowableboot.service.FlowableService;
 import com.flowable.flowableboot.service.ReceiveTask;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.springframework.http.MediaType;
@@ -25,8 +27,7 @@ public class FlowableRestController {
   private final FlowableService flowableService;
   private final ReceiveTask receiveTask;
 
-  public FlowableRestController(
-      FlowableService flowableService, ReceiveTask receiveTask) {
+  public FlowableRestController(FlowableService flowableService, ReceiveTask receiveTask) {
     this.flowableService = flowableService;
     this.receiveTask = receiveTask;
   }
@@ -40,11 +41,14 @@ public class FlowableRestController {
 
 //  Endpoint used to complete a user task
   @PostMapping(value="/usertask")
-  public void runUserTask(@RequestBody TaskRepresentation taskRepresentation){
-    String taskId = taskRepresentation.getId();
-    String taskName = taskRepresentation.getName();
-    // This is retrieving tasks by name and id
+  public void runUserTask(@RequestBody UserTaskRepresentation userTaskRepresentation){
+    String taskId = userTaskRepresentation.getId();
+    String taskName = userTaskRepresentation.getName();
+    Map<String,String> taskAssign = userTaskRepresentation.getAssign();
+    
     Task task = flowableService.retrieveTask(taskName, taskId);
+//    TODO retrieve taskAssign map key and map value "assignee" and the username
+//    TODO: set these values as the userTask assignee
     flowableService.completeTask(task);
   }
 
@@ -53,6 +57,8 @@ public class FlowableRestController {
   public void setStatus(@RequestBody TaskStatusRepresentation taskStatusRepresentation){
     String taskId = taskStatusRepresentation.getId();
     String status = taskStatusRepresentation.getStatus();
+
+
     flowableService.setStatus(status, taskId);
   }
 

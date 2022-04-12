@@ -11,6 +11,7 @@ import org.flowable.engine.TaskService;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,9 @@ public class FlowableService {
   @Autowired
   private PersonRepository personRepository;
 
+  @Value("${flowable.process.key.id}")
+  public String processKey;
+
   //  Method to initiate process with an assignee name
   public void startProcess(String assignee) {
 
@@ -34,7 +38,9 @@ public class FlowableService {
 
     Map<String, Object> variables = new HashMap<String, Object>();
     variables.put("person", person);
-    runtimeService.startProcessInstanceByKey("multiTaskProcess", variables);
+    // On task creation, task status is set to 'Pending'
+    variables.put("status", "Pending");
+    runtimeService.startProcessInstanceByKey(processKey, variables);
   }
 
 // Method to get tasks by assignee name

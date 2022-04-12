@@ -6,14 +6,18 @@ package com.flowable.flowableboot.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TaskRepresentation {
+public class UserTaskRepresentation {
   private String id;
   private String name;
+  private Map<String, String> assign = new HashMap<String, String>();
 
-  public TaskRepresentation(String id, String name) {
+  public UserTaskRepresentation(String id, String name,
+      Map<String, String> assign) {
     this.id = id;
     this.name = name;
+    this.assign = assign;
   }
+
 
   public String getId(){
     return id;
@@ -28,4 +32,11 @@ public class TaskRepresentation {
     this.name = name;
   }
 
+  public Map<String, String> getAssign() {
+    return assign;
+  }
+
+  public void setAssign(Map<String, String> assign) {
+    this.assign = assign;
+  }
 }
