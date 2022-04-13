@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "9f5399e8-c767-4316-ba03-18407ba94682",
+		"name": "UMS API Examples",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get UMS Tasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}umsTasks",
+					"host": [
+						"{{endpoint}}umsTasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get UMS Tasks By Assignee",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}umsTasks?assignee=Rose%20Bush",
+					"host": [
+						"{{endpoint}}umsTasks"
+					],
+					"query": [
+						{
+							"key": "assignee",
+							"value": "Rose%20Bush"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search UMS Tasks By Assignee",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}umsTasks/search/findByAssignee?assignee=Rose%20Bush",
+					"host": [
+						"{{endpoint}}umsTasks"
+					],
+					"path": [
+						"search",
+						"findByAssignee"
+					],
+					"query": [
+						{
+							"key": "assignee",
+							"value": "Rose%20Bush"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search UMS Tasks By Requester",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}umsTasks/search/findByRequester?requester=Simon%20Sais",
+					"host": [
+						"{{endpoint}}umsTasks"
+					],
+					"path": [
+						"search",
+						"findByRequester"
+					],
+					"query": [
+						{
+							"key": "requester",
+							"value": "Simon%20Sais"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
