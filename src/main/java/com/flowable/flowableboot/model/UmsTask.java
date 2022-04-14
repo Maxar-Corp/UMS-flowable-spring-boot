@@ -3,17 +3,12 @@ package com.flowable.flowableboot.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Entity
-public class UmsTask {
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class UmsTask extends BaseEntity{
 
     @Column
     private String process_instance_id;
@@ -47,6 +42,7 @@ public class UmsTask {
 
     public UmsTask(String process_instance_id, String name, String requester, String assignee, Integer priority,
                    LocalDateTime dueDate, LocalDateTime receivedDate, String loe, String  status, String description){
+        super();
         this.process_instance_id = process_instance_id;
         this.name = name;
         this.requester = requester;
@@ -60,10 +56,6 @@ public class UmsTask {
     }
 
     protected UmsTask(){}
-
-    public Integer getId() {
-        return id;
-    }
 
     public String getProcess_instance_id() {
         return process_instance_id;
@@ -150,7 +142,7 @@ public class UmsTask {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
 
         return "umsTask{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", process_instance_id='" + process_instance_id + '\'' +
                 ", name='" + name + '\'' +
                 ", requester='" + requester + '\'' +
@@ -170,7 +162,7 @@ public class UmsTask {
         if (obj == null || getClass() != obj.getClass()) return false;
         UmsTask task = (UmsTask) obj;
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
-        return Objects.equals(id, task.id) &&
+        return Objects.equals(this.getId(), task.getId()) &&
                 Objects.equals(process_instance_id, task.process_instance_id) &&
                 Objects.equals(requester, task.requester) &&
                 Objects.equals(assignee, task.assignee) &&
@@ -184,7 +176,7 @@ public class UmsTask {
 
     @Override
     public int hashCode(){
-        return Objects.hash(id, process_instance_id, requester, assignee, priority,
+        return Objects.hash(this.getId(), process_instance_id, requester, assignee, priority,
                 dueDate, receivedDate, loe, status, description);
     }
 }

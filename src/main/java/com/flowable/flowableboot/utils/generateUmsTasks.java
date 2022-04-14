@@ -17,7 +17,7 @@ import java.util.Random;
 import java.util.UUID;
 
 public class generateUmsTasks {
-    private static ArrayList<String> taskTypes = new ArrayList<>(){
+    private static ArrayList<String> taskTypes = new ArrayList<String>(){
         {
             add("Report: ");
             add("Presentation: ");
@@ -26,7 +26,7 @@ public class generateUmsTasks {
         }
     };
 
-    private static ArrayList<String> taskTopics = new ArrayList<>(){
+    private static ArrayList<String> taskTopics = new ArrayList<String>(){
         {
             add("Company X");
             add("Country Y");
@@ -35,7 +35,7 @@ public class generateUmsTasks {
     };
 
     // names from https://cybertext.wordpress.com/2007/04/30/fake-names-for-documentation/
-    private static ArrayList<String> requesterNames = new ArrayList<>(){
+    private static ArrayList<String> requesterNames = new ArrayList<String>(){
         {
             add("Simon Sais");
             add("Paige Turner");
@@ -43,7 +43,7 @@ public class generateUmsTasks {
         }
     };
 
-    private static ArrayList<String> assigneeName = new ArrayList<>(){
+    private static ArrayList<String> assigneeName = new ArrayList<String>(){
         {
             add("Col Fays");
             add("Rose Bush");
@@ -54,31 +54,31 @@ public class generateUmsTasks {
         }
     };
 
-    private static ArrayList<Integer> priority = new ArrayList<>(){
+    private static ArrayList<Integer> priority = new ArrayList<Integer>(){
         {
             add(1); add(3); add(5);
         }
     };
 
-    private static ArrayList<Integer> daysDue = new ArrayList<>(){
+    private static ArrayList<Integer> daysDue = new ArrayList<Integer>(){
         {
             add(3); add(5); add(10); add(14);
         }
     };
 
-    private static ArrayList<String> loe_options = new ArrayList<>(){
+    private static ArrayList<String> loe_options = new ArrayList<String>(){
         {
             add("High"); add("Medium"); add("Low");
         }
     };
 
-    private static ArrayList<String> status = new ArrayList<>(){
+    private static ArrayList<String> status = new ArrayList<String>(){
         {
             add("Pending"); add("To Review"); add("In Progress"); add("Complete");
         }
     };
 
-    private static  ArrayList<String> description = new ArrayList<>(){
+    private static  ArrayList<String> description = new ArrayList<String>(){
         {
             add("Task requires research and at least three sources.");
             add("Task should include full sources cited for primary resources. \n" +
@@ -168,7 +168,7 @@ public class generateUmsTasks {
                            String status, String description){
             this.process_instance_id = process_instance_id;
             this.name = name;
-            this. requester = requester;
+            this.requester = requester;
             this.assignee = assignee;
             this.priority = priority;
             this.dueDate = dueDate;

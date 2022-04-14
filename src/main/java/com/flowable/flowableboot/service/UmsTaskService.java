@@ -35,10 +35,10 @@ public class UmsTaskService {
      *
      * @return UmsTask Entity
      */
-    public UmsTask createUmsTask(String process_instance_id, String name, String requester, String assignee, Integer priority,
+    public void createUmsTask(String process_instance_id, String name, String requester, String assignee, Integer priority,
                                  LocalDateTime dueDate, LocalDateTime receivedDate, String loe, String  status, String description){
 
-        // don't know if we want to abstract this more - may need a task and process service
+        // TO DO: Hook into workflow engine
         // ProcessInstance pi = runtimeService.createProcessInstanceQuery()
         //        .processInstanceId(process_instance_id).singleResult();
 
@@ -46,20 +46,16 @@ public class UmsTaskService {
             throw new RuntimeException("Process instance did not exist in workflow engine.");
         }
 
-        return umsTaskRepository.save(new UmsTask(process_instance_id, name, requester, assignee, priority,
+        umsTaskRepository.save(new UmsTask(process_instance_id, name, requester, assignee, priority,
                         dueDate, receivedDate, loe, status, description));
     }
 
     /**
-     *
-     */
-
-
-    /**
-     * Return all UmsTasks
+     * Return Iterahble of all UmsTasks
      * @return all UmsTasks
      */
-    public Iterable<UmsTask> lookup(){return umsTaskRepository.findAll();}
+    public Iterable<UmsTask> getAllUmsTasks(){return umsTaskRepository.findAll();}
+
 
     /**
      * Return number of UmsTasks
