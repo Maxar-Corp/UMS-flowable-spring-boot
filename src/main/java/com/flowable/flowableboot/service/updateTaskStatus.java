@@ -5,14 +5,13 @@ import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-@Service("leadReceiveServiceTask")
+@Service("updateTaskStatus")
 @Scope("prototype")
-public class LeadReceiveServiceTask implements JavaDelegate {
+public class updateTaskStatus implements JavaDelegate {
 
   @Override
   public void execute(DelegateExecution execution){
     System.out.println(String.format("Execution status: %s", execution.getVariable("status")));
-    System.out.println("Update db with task for lead");
-    execution.setVariable("receivedByLead", true);
+    System.out.println("Update db with task status");
   }
 }

@@ -45,7 +45,6 @@ public class FlowableService {
     // On task creation, task status is set to 'Pending'
     variables.put("status", defaultStatus);
 
-//    TODO extract the username to use in the xml to set assignee
     System.out.println(String.format("assigner: %s", variables.get("assigner")));
 
     runtimeService.startProcessInstanceByKey(processKey, variables);
@@ -67,8 +66,8 @@ public class FlowableService {
 
   public void processInstanceDetails(String processId){
     System.out.println(String.format("processId: %s", processId));
-    // Suspend all process instances
-    //    runtimeService.suspendProcessInstanceById(processId);
+    // Uncomment to Suspend/remove all active process instances
+    runtimeService.suspendProcessInstanceById(processId);
   }
 
 //  Method to add a new user
@@ -79,7 +78,7 @@ public class FlowableService {
 
   public void createDemoUsers(){
     if (personRepository.findAll().size() == 0){
-//      personRepository.save(new Person("estyl", "pedro", "sorto", new Date()));
+//      personRepository.save(new Person("hokie", "pedro", "sorto", new Date()));
     }
   }
 
@@ -96,21 +95,23 @@ public class FlowableService {
     this.taskService.complete(task.getId());
   }
 
-   public void completeUserTask(Task task, Map<String, String> assignee){
-     Map<String, Object> variables = new HashMap<>();
+  public void completeUserTask(Task task, Map<String, String> assign){
+    Map<String, Object> variables = new HashMap<>();
+    Map<String, Object> taskVars = this.taskService.getVariables(task.getId());
 
-     if(assignee.containsKey("assignee")){
-       variables.put("assignee", assignee.get("assignee"));
-     } else{
-       variables.put("assigner", assignee.get("assigner"));
-     }
-//     variables.put("status", status);
-     this.taskService.complete(task.getId(), variables);
+    if(assign.containsKey("assignee") && assign.get("assignee") != ""){
+      variables.put("assignee", assign.get("assignee"));
+    } else if(assign.containsKey("assigner") && assign.get("assigner") != ""){
+      variables.put("assigner", assign.get("assigner"));
+    }else{
+//      TODO account for NULL values
+      variables.put("assigner", taskVars.get("assigner").toString());
+      variables.put("assignee", taskVars.get("assignee").toString());
+    }
+    this.taskService.complete(task.getId(), variables);
+  }
 
-   }
-
-  public void setStatus(String status, String taskId)
-  {
+  public void setStatus(String status, String taskId){
     Map<String, Object> variables = new HashMap<>();
     if(status == ""){
       variables = this.taskService.getVariables(taskId);
