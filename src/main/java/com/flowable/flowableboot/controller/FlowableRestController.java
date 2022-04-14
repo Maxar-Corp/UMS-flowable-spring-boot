@@ -43,13 +43,15 @@ public class FlowableRestController {
   @PostMapping(value="/usertask")
   public void runUserTask(@RequestBody UserTaskRepresentation userTaskRepresentation){
     String taskId = userTaskRepresentation.getId();
-    String taskName = userTaskRepresentation.getName();
+    String taskStatus = userTaskRepresentation.getStatus();
     Map<String,String> taskAssign = userTaskRepresentation.getAssign();
     
-    Task task = flowableService.retrieveTask(taskName, taskId);
+    Task task = flowableService.retrieveTask(taskId);
 //    TODO retrieve taskAssign map key and map value "assignee" and the username
 //    TODO: set these values as the userTask assignee
-    flowableService.completeTask(task);
+//    flowableService.completeTask(task);
+    flowableService.setStatus(taskStatus, taskId);
+    flowableService.completeUserTask(task, taskAssign);
   }
 
 //  Endpoint used to update a task status
@@ -60,6 +62,7 @@ public class FlowableRestController {
 
 
     flowableService.setStatus(status, taskId);
+//    flowableService.completeTask(task);
   }
 
 //  Endpoint to create a user task

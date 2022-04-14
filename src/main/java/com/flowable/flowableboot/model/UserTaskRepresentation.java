@@ -8,13 +8,13 @@ import java.util.Map;
 
 public class UserTaskRepresentation {
   private String id;
-  private String name;
+  private String status;
   private Map<String, String> assign = new HashMap<String, String>();
 
-  public UserTaskRepresentation(String id, String name,
+  public UserTaskRepresentation(String id, String status,
       Map<String, String> assign) {
     this.id = id;
-    this.name = name;
+    this.status = status;
     this.assign = assign;
   }
 
@@ -25,11 +25,11 @@ public class UserTaskRepresentation {
   public void setId(String id){
     this.id = id;
   }
-  public String getName(){
-    return name;
+  public String getStatus(){
+    return status;
   }
-  public void setName(String name){
-    this.name = name;
+  public void setStatus(String status){
+    this.status = status;
   }
 
   public Map<String, String> getAssign() {

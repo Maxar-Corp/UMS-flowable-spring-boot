@@ -35,7 +35,7 @@ public class FlowableTriggerableCustomServiceTaskApplicationTests {
   private FlowableService flowableService;
 
   @Test
-  @Deployment(resources = "/one-task-process.bpmn20.xml")
+  @Deployment(resources = "/ums_simple_happy_path.bpmn20.xml")
   void testTriggereableCustomerServiceTask(){
 
     // Pull a person from personRepository
