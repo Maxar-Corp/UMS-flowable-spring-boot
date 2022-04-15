@@ -69,7 +69,7 @@ public class FlowableRestController {
 
 //  Returns all active processes
   @RequestMapping(value="/processes", method= RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-  public List<ProcessInstanceRepresentation> getProcesses(){
+  public List<ProcessInstanceRepresentation> getProcesses(@RequestParam Boolean delete){
     // Return all process instances
     List<ProcessInstance> processes = flowableService.getProcessInstances();
     // Prints list of process instance ids
@@ -77,7 +77,7 @@ public class FlowableRestController {
     List<ProcessInstanceRepresentation> processIdList = new ArrayList<>();
     for(ProcessInstance process : processes){
       processIdList.add(new ProcessInstanceRepresentation(process.getId()));
-      flowableService.processInstanceDetails(process.getId());
+      flowableService.processInstanceDetails(process.getId(), delete);
     }
     return processIdList;
   }

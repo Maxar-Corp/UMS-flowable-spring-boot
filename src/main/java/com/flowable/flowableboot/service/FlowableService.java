@@ -33,12 +33,18 @@ public class FlowableService {
   @Value("${flowable.process.defaultStatus}")
   public String defaultStatus;
 
+  public void createDemoUsers(){
+//    if (personRepository.findAll().size() == 0){
+//      personRepository.save(new Person("estyl", "pedro", "sorto", new Date()));
+//    }
+  }
+
   //  Method to initiate process with an assignee name
   public void startProcess(String assignee) {
     // Search person repository by username
     Person person = personRepository.findByUsername(assignee);
     Map<String, Object> variables = new HashMap<String, Object>();
-    variables.put("requester", person.getUsername());
+      variables.put("requester", person.getUsername());
 
     // On task creation, task status is set to 'Pending'
     variables.put("status", defaultStatus);
@@ -60,10 +66,11 @@ public class FlowableService {
     return processInstances;
   }
 
-  public void processInstanceDetails(String processId){
+  public void processInstanceDetails(String processId, boolean delete){
     System.out.println(String.format("processId: %s", processId));
-    // Uncomment to Suspend/remove all active process instances
-    //runtimeService.suspendProcessInstanceById(processId);
+    if(delete){
+      runtimeService.suspendProcessInstanceById(processId);
+    }
   }
 
 //  Method to add a new user
