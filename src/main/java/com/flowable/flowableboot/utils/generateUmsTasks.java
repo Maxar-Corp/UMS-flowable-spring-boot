@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.flowable.flowableboot.model.Loe;
+import com.flowable.flowableboot.model.Priority;
+import com.flowable.flowableboot.model.Status;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,9 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class generateUmsTasks {
     private static ArrayList<String> taskTypes = new ArrayList<String>(){
@@ -54,11 +55,7 @@ public class generateUmsTasks {
         }
     };
 
-    private static ArrayList<Integer> priority = new ArrayList<Integer>(){
-        {
-            add(1); add(3); add(5);
-        }
-    };
+    private static Priority[] priorityList = Priority.values();
 
     private static ArrayList<Integer> daysDue = new ArrayList<Integer>(){
         {
@@ -66,17 +63,9 @@ public class generateUmsTasks {
         }
     };
 
-    private static ArrayList<String> loe_options = new ArrayList<String>(){
-        {
-            add("High"); add("Medium"); add("Low");
-        }
-    };
+    private static Loe[] loeList = Loe.values();
 
-    private static ArrayList<String> status = new ArrayList<String>(){
-        {
-            add("Pending"); add("To Review"); add("In Progress"); add("Complete");
-        }
-    };
+    private static Status [] statusList = Status.values();
 
     private static  ArrayList<String> description = new ArrayList<String>(){
         {
@@ -112,21 +101,22 @@ public class generateUmsTasks {
                     + taskTopics.get(rand.nextInt(taskTopics.size()));
 
             LocalDateTime recDate = LocalDateTime.now(ZoneId.of("UTC"))
-                    .minusDays(daysDue.get(rand.nextInt(daysDue.size())));
-            LocalDateTime dDate = LocalDateTime.now(ZoneId.of("UTC"))
+                    .plusHours(daysDue.get(rand.nextInt(daysDue.size())));
+            LocalDateTime dDate = recDate
                     .plusDays(daysDue.get(rand.nextInt(daysDue.size())));
 
-
+            // This test UMS  object should reflect what the UI would send in a JSON payload.
+            // For that reason, the integer or string values are used in this class.
             TestUmsTask test = new TestUmsTask(
                     UUID.randomUUID().toString(),
                     taskName,
                     requesterNames.get(rand.nextInt(requesterNames.size())),
                     assigneeName.get(rand.nextInt(assigneeName.size())),
-                    priority.get(rand.nextInt(priority.size())),
+                    priorityList[rand.nextInt(priorityList.length)].getValue(),
                     dDate,
                     recDate,
-                    loe_options.get(rand.nextInt(loe_options.size())),
-                    status.get(rand.nextInt(status.size())),
+                    loeList[rand.nextInt(loeList.length)].loe(),
+                    statusList[rand.nextInt(statusList.length)].status(),
                     description.get(rand.nextInt(description.size()))
             );
 

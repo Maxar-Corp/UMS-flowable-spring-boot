@@ -1,15 +1,29 @@
 package com.flowable.flowableboot.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum Priority {
-    HIGH(1), MEDIUM(2), LOW(3);
+    FIRST(1), SECOND(2), THIRD(3);
 
     private final int value;
+    private static Map map = new HashMap<>();
 
-    Priority(final int newValue){
-        value = newValue;
+    private Priority(int value){
+        this.value = value;
     }
 
-    public int getValue() {
+    static{
+        for(Priority priority: Priority.values()){
+            map.put(priority.value, priority);
+        }
+    }
+
+    public static Priority valueOf(int priority){
+        return (Priority) map.get(priority);
+    }
+
+    public int getValue(){
         return value;
     }
 }

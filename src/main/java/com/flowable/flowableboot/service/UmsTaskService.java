@@ -1,5 +1,8 @@
 package com.flowable.flowableboot.service;
 
+import com.flowable.flowableboot.model.Loe;
+import com.flowable.flowableboot.model.Priority;
+import com.flowable.flowableboot.model.Status;
 import com.flowable.flowableboot.model.UmsTask;
 import com.flowable.flowableboot.repository.UmsTaskRepository;
 import org.flowable.engine.RuntimeService;
@@ -46,8 +49,8 @@ public class UmsTaskService {
             throw new RuntimeException("Process instance did not exist in workflow engine.");
         }
 
-        umsTaskRepository.save(new UmsTask(process_instance_id, name, requester, assignee, priority,
-                        dueDate, receivedDate, loe, status, description));
+        umsTaskRepository.save(new UmsTask(process_instance_id, name, requester, assignee, Priority.valueOf(priority),
+                        dueDate, receivedDate, Loe.valueOfLoe(loe), Status.valueOfStatus(status), description));
     }
 
     /**

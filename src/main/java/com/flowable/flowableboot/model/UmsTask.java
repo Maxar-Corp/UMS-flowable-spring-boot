@@ -1,10 +1,8 @@
 package com.flowable.flowableboot.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Entity
@@ -22,8 +20,9 @@ public class UmsTask extends BaseEntity{
     @Column
     private String assignee;
 
+    @Convert(converter = PriorityAttributeConverter.class)
     @Column
-    private Integer priority;
+    private Priority priority;
 
     @Column
     private LocalDateTime dueDate;
@@ -31,17 +30,19 @@ public class UmsTask extends BaseEntity{
     @Column
     private LocalDateTime receivedDate;
 
+    @Convert(converter = LoeAttributeConverter.class)
     @Column
-    private String loe;
+    private Loe loe;
 
+    @Convert(converter = StatusAttributeConverter.class)
     @Column
-    private String status;
+    private Status status;
 
     @Column(length = 2000)
     private String description;
 
-    public UmsTask(String process_instance_id, String name, String requester, String assignee, Integer priority,
-                   LocalDateTime dueDate, LocalDateTime receivedDate, String loe, String  status, String description){
+    public UmsTask(String process_instance_id, String name, String requester, String assignee, Priority priority,
+                   LocalDateTime dueDate, LocalDateTime receivedDate, Loe loe, Status  status, String description){
         super();
         this.process_instance_id = process_instance_id;
         this.name = name;
@@ -89,11 +90,11 @@ public class UmsTask extends BaseEntity{
         this.assignee = assignee;
     }
 
-    public Integer getPriority() {
-        return priority;
+    public int getPriority() {
+        return priority.getValue();
     }
 
-    public void setPriority(Integer priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
@@ -114,18 +115,18 @@ public class UmsTask extends BaseEntity{
     }
 
     public String getLoe() {
-        return loe;
+        return loe.loe();
     }
 
-    public void setLoe(String loe) {
+    public void setLoe(Loe loe) {
         this.loe = loe;
     }
 
     public String getStatus() {
-        return status;
+        return status.status();
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -139,7 +140,6 @@ public class UmsTask extends BaseEntity{
 
     @Override
     public String toString(){
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
 
         return "umsTask{" +
                 "id=" + this.getId() +
@@ -147,12 +147,14 @@ public class UmsTask extends BaseEntity{
                 ", name='" + name + '\'' +
                 ", requester='" + requester + '\'' +
                 ", assignee=" + assignee +
-                ", priority='" + priority + '\'' +
-                ", dueDate='" + dueDate.format(dateTimeFormatter) + '\'' +
-                ", receivedDate='" + receivedDate.format(dateTimeFormatter) + '\'' +
-                ", loe=" + loe +
-                ", status=" + status +
+                ", priority='" + priority.getValue() + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                ", receivedDate='" + receivedDate + '\'' +
+                ", loe=" + loe.loe() +
+                ", status=" + status.status() +
                 ", description=" + description +
+                ", createdDate=" + this.getCreatedDate() +
+                ", updatedDate=" + this.getUpdatedDate() +
                 '}';
     }
 
@@ -161,22 +163,23 @@ public class UmsTask extends BaseEntity{
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         UmsTask task = (UmsTask) obj;
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
         return Objects.equals(this.getId(), task.getId()) &&
                 Objects.equals(process_instance_id, task.process_instance_id) &&
                 Objects.equals(requester, task.requester) &&
                 Objects.equals(assignee, task.assignee) &&
-                Objects.equals(priority, task.priority) &&
-                Objects.equals(dueDate.format(dateTimeFormatter), task.dueDate.format(dateTimeFormatter)) &&
-                Objects.equals(receivedDate.format(dateTimeFormatter), task.receivedDate.format(dateTimeFormatter)) &&
-                Objects.equals(loe, task.loe) &&
-                Objects.equals(status, task.status) &&
-                Objects.equals(description, task.description);
+                priority== task.priority &&
+                Objects.equals(dueDate, task.dueDate) &&
+                Objects.equals(receivedDate, task.receivedDate) &&
+                loe == task.loe &&
+                status == status &&
+                Objects.equals(description, task.description) &&
+                Objects.equals(createdDate, task.createdDate) &&
+                Objects.equals(updatedDate, task.updatedDate);
     }
 
     @Override
     public int hashCode(){
         return Objects.hash(this.getId(), process_instance_id, requester, assignee, priority,
-                dueDate, receivedDate, loe, status, description);
+                dueDate, receivedDate, loe, status, description, createdDate, updatedDate);
     }
 }

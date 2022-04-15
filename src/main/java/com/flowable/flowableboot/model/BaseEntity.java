@@ -26,7 +26,7 @@ public class BaseEntity {
     public BaseEntity() {
         this.id = id;
         this.createdDate = Instant.now();
-        this.updatedDate = Instant.now();
+        this.updatedDate = createdDate;
     }
 
     public Long getId() {
