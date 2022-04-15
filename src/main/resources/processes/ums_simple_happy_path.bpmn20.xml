@@ -3,11 +3,11 @@
   <process id="UMSSimpleHappyPath" name="UMS Simple Happy Path" isExecutable="true">
     <documentation>A simplified version of the UMS happy path, does not include inclusive gates with email notifications</documentation>
     <startEvent id="startEvent" name="Task Form Entered"></startEvent>
-    <serviceTask id="leadReceiveTask" name="Task Added"
-      flowable:delegateExpression="${leadReceiveServiceTask}">
+    <serviceTask id="requesterReceiveTask" name="Task Added"
+      flowable:delegateExpression="${requesterReceiveServiceTask}">
     </serviceTask>
-    <userTask id="leadAssignTask" name="Lead Assigns Task"
-      flowable:assignee="${assigner}">
+    <userTask id="requesterAssignTask" name="Requester Assigns Task"
+      flowable:assignee="${requester}">
       <extensionElements>
         <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler">
           <![CDATA[false]]>
@@ -19,10 +19,10 @@
     </serviceTask>
 
     <sequenceFlow id="sid-36BFDAB5-C12E-4455-857F-F1314FD314D9"
-      sourceRef="startEvent" targetRef="leadReceiveTask">
+      sourceRef="startEvent" targetRef="requesterReceiveTask">
     </sequenceFlow>
     <sequenceFlow id="sid-3F504A7F-9658-4902-AD2D-24C328AC2415"
-      sourceRef="leadReceiveTask" targetRef="leadAssignTask">
+      sourceRef="requesterReceiveTask" targetRef="requesterAssignTask">
     </sequenceFlow>
 
     <userTask id="assignSetStatusToIP" name="Assignee Set Status to In Progress"
@@ -42,8 +42,8 @@
       </extensionElements>
     </userTask>
 
-    <userTask id="leadSetStatus" name="Lead Set Task to Complete"
-      flowable:assignee="${assigner}">
+    <userTask id="requesterSetStatus" name="Requester Set Task to Complete"
+      flowable:assignee="${requester}">
       <extensionElements>
         <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler">
           <![CDATA[false]]>
@@ -54,7 +54,7 @@
     <endEvent id="sid-A80ACAC5-5D98-43E1-9733-2BF6892A4D4D" name="Task complete"></endEvent>
 
     <sequenceFlow id="sid-00A4E781-94DB-43CA-897C-B733F375D4FA"
-      sourceRef="leadAssignTask" targetRef="assigneeReceiveTask">
+      sourceRef="requesterAssignTask" targetRef="assigneeReceiveTask">
     </sequenceFlow>
     <sequenceFlow id="sid-A4E49B6E-CDC7-4053-B74A-07F24A1D6527"
       sourceRef="assigneeReceiveTask" targetRef="assignSetStatusToIP">
@@ -81,7 +81,7 @@
       sourceRef="sid-5AC85C6E-EC36-4F83-87AF-D9EA43816586" targetRef="sid-A80ACAC5-5D98-43E1-9733-2BF6892A4D4D">
     </sequenceFlow>
     <sequenceFlow id="sid-08AC6BA7-D5B9-40B6-BC47-507A58E8ACE0"
-      sourceRef="leadSetStatus" targetRef="status"
+      sourceRef="requesterSetStatus" targetRef="status"
     ></sequenceFlow>
     <sequenceFlow id="sid-DC04B80F-AF6C-4077-B001-DABD90EFCD57"
       sourceRef="status" targetRef="assignSetStatusToTR">
@@ -98,7 +98,7 @@
     </serviceTask>
 
     <sequenceFlow id="sid-27934CAE-B7AC-4673-9978-A797E1DB4B3F"
-      sourceRef="sid-3F3797F0-1D05-46C2-8CD3-6F9C2762D8DD" targetRef="leadSetStatus">
+      sourceRef="sid-3F3797F0-1D05-46C2-8CD3-6F9C2762D8DD" targetRef="requesterSetStatus">
     </sequenceFlow>
     <sequenceFlow id="sid-8D92F604-78C7-42B5-B5D0-C01F2AF4D24F"
       sourceRef="sid-0FBBE7CD-4826-45DA-8E1C-D52A0EA1C843" targetRef="assignSetStatusToTR">
@@ -135,10 +135,10 @@
       <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
         <omgdc:Bounds height="30.0" width="30.0" x="48.14814771208307" y="150.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="leadReceiveTask" id="BPMNShape_leadReceiveTask">
+      <bpmndi:BPMNShape bpmnElement="requesterReceiveTask" id="BPMNShape_requesterReceiveTask">
         <omgdc:Bounds height="80.0" width="100.0" x="122.22222156812461" y="125.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="leadAssignTask" id="BPMNShape_leadAssignTask">
+      <bpmndi:BPMNShape bpmnElement="requesterAssignTask" id="BPMNShape_requesterAssignTask">
         <omgdc:Bounds height="80.0" width="100.0" x="270.3703692802077" y="125.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="assigneeReceiveTask" id="BPMNShape_assigneeReceiveTask">
@@ -150,7 +150,7 @@
       <bpmndi:BPMNShape bpmnElement="assignSetStatusToTR" id="BPMNShape_assignSetStatusToTR">
         <omgdc:Bounds height="80.0" width="100.0" x="955.5555524485919" y="125.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="leadSetStatus" id="BPMNShape_leadSetStatus">
+      <bpmndi:BPMNShape bpmnElement="requesterSetStatus" id="BPMNShape_requesterSetStatus">
         <omgdc:Bounds height="78.41129349512892" width="100.00252129649039" x="1316.6666103733933" y="124.79434729197129"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-A80ACAC5-5D98-43E1-9733-2BF6892A4D4D" id="BPMNShape_sid-A80ACAC5-5D98-43E1-9733-2BF6892A4D4D">

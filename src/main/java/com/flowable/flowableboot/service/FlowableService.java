@@ -2,7 +2,6 @@ package com.flowable.flowableboot.service;
 
 import com.flowable.flowableboot.repository.PersonRepository;
 import com.flowable.flowableboot.model.Person;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,38 +35,35 @@ public class FlowableService {
 
   //  Method to initiate process with an assignee name
   public void startProcess(String assignee) {
-
-    // Checks person repository for existence of user
+    // Search person repository by username
     Person person = personRepository.findByUsername(assignee);
-
     Map<String, Object> variables = new HashMap<String, Object>();
-    variables.put("assigner", person.getUsername());
+    variables.put("requester", person.getUsername());
+
     // On task creation, task status is set to 'Pending'
     variables.put("status", defaultStatus);
-
-    System.out.println(String.format("assigner: %s", variables.get("assigner")));
-
+    System.out.println(String.format("requester: %s", variables.get("requester")));
     runtimeService.startProcessInstanceByKey(processKey, variables);
   }
 
-// Method to get tasks by assignee name
+  // Method to get tasks by assignee
   public List<Task> getTasks(String assignee){
     return taskService.createTaskQuery().taskAssignee(assignee).list();
   }
 
-//  Method to get current processes
+//  Returns all active process instances
   public List<ProcessInstance> getProcessInstances(){
-
-    List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
-        .active()
-        .list();
+    List<ProcessInstance> processInstances =
+        runtimeService.createProcessInstanceQuery()
+          .active()
+          .list();
     return processInstances;
   }
 
   public void processInstanceDetails(String processId){
     System.out.println(String.format("processId: %s", processId));
     // Uncomment to Suspend/remove all active process instances
-    runtimeService.suspendProcessInstanceById(processId);
+    //runtimeService.suspendProcessInstanceById(processId);
   }
 
 //  Method to add a new user
@@ -76,23 +72,14 @@ public class FlowableService {
     personRepository.save(new Person(username, firstName, lastName));
   }
 
-  public void createDemoUsers(){
-    if (personRepository.findAll().size() == 0){
-//      personRepository.save(new Person("hokie", "pedro", "sorto", new Date()));
-    }
-  }
-
-//  This method needs to be passed a process instance ID value to be able
-  // to search for specific tasks within the current process
+//  This method needs to be passed a process instance
+//  ID value to be able to search for specific tasks
+//  within the current process
   public Task retrieveTask(String taskId){
     Task task = taskService.createTaskQuery()
         .taskId(taskId)
         .singleResult();
     return task;
-  }
-
-  public void completeTask(Task task){
-    this.taskService.complete(task.getId());
   }
 
   public void completeUserTask(Task task, Map<String, String> assign){
@@ -101,12 +88,12 @@ public class FlowableService {
 
     if(assign.containsKey("assignee") && assign.get("assignee") != ""){
       variables.put("assignee", assign.get("assignee"));
-    } else if(assign.containsKey("assigner") && assign.get("assigner") != ""){
-      variables.put("assigner", assign.get("assigner"));
+    } else if(assign.containsKey("requester") && assign.get("requester") != ""){
+      variables.put("requester", assign.get("requester"));
     }else{
-//      TODO account for NULL values
-      variables.put("assigner", taskVars.get("assigner").toString());
-      variables.put("assignee", taskVars.get("assignee").toString());
+      // If not assignee is set, assign to assigner
+      variables.put("requester", taskVars.get("requester").toString());
+      variables.put("assignee", taskVars.get("requester").toString());
     }
     this.taskService.complete(task.getId(), variables);
   }
