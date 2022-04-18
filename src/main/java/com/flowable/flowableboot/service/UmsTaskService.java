@@ -1,5 +1,8 @@
 package com.flowable.flowableboot.service;
 
+import com.flowable.flowableboot.dtos.UmsTaskGetDto;
+import com.flowable.flowableboot.dtos.UmsTaskPostDto;
+import com.flowable.flowableboot.mappers.MapStructMapper;
 import com.flowable.flowableboot.model.Loe;
 import com.flowable.flowableboot.model.Priority;
 import com.flowable.flowableboot.model.Status;
@@ -10,55 +13,73 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UmsTaskService {
     private UmsTaskRepository umsTaskRepository;
-    private RuntimeService runtimeService;
+    private MapStructMapper mapStructMapper;
 
     @Autowired
-    public UmsTaskService(RuntimeService runtimeService, UmsTaskRepository umsTaskRepository){
-        this.runtimeService = runtimeService;
+    public UmsTaskService(MapStructMapper mapStructMapper, UmsTaskRepository umsTaskRepository){
+        this.mapStructMapper = mapStructMapper;
         this.umsTaskRepository = umsTaskRepository;
     }
 
     /**
      * Create a new UmsTask - Ideally, this would assume a process was started in workflow engine
      *
-     * @param process_instance_id process_instance_id
-     * @param name name
-     * @param requester requester
-     * @param assignee assignee
-     * @param priority priority
-     * @param dueDate dueDate
-     * @param receivedDate receivedDate
-     * @param loe loe
-     * @param status status
-     * @param description description
+     * @param umsTaskPostDto umsTaskPostDto
      *
-     * @return UmsTask Entity
+     * @return No return
+     *
+     * @exception RuntimeException if associated process id is not verified
      */
-    public void createUmsTask(String process_instance_id, String name, String requester, String assignee, Integer priority,
-                                 LocalDateTime dueDate, LocalDateTime receivedDate, String loe, String  status, String description){
+    public void createUmsTask(UmsTaskPostDto umsTaskPostDto){
 
-        // TO DO: Hook into workflow engine
+        // TODO: Hook into workflow engine
         // ProcessInstance pi = runtimeService.createProcessInstanceQuery()
         //        .processInstanceId(process_instance_id).singleResult();
 
-        if(process_instance_id == null){
+        //TODO: Exception Handling
+        if(umsTaskPostDto.getProcess_instance_id().isEmpty()){
             throw new RuntimeException("Process instance did not exist in workflow engine.");
         }
 
-        umsTaskRepository.save(new UmsTask(process_instance_id, name, requester, assignee, Priority.valueOf(priority),
-                        dueDate, receivedDate, Loe.valueOfLoe(loe), Status.valueOfStatus(status), description));
+        umsTaskRepository.save(mapStructMapper.umsTaskPostDtoToUmsTask(umsTaskPostDto));
     }
 
     /**
      * Return Iterahble of all UmsTasks
      * @return all UmsTasks
      */
-    public Iterable<UmsTask> getAllUmsTasks(){return umsTaskRepository.findAll();}
+    public List<UmsTaskGetDto> getAllUmsTasks(){
+        List<UmsTaskGetDto> list = new ArrayList<UmsTaskGetDto>();
+        for (UmsTask umsTask : umsTaskRepository.findAll()) {
+            list.add(mapStructMapper.umsTaskToUmsTaskGetDto(umsTask));
+        }
 
+        return list;
+    }
+
+    public List<UmsTaskGetDto> searchUmsTaskByAssignee(String assignee){
+        List<UmsTaskGetDto> list = new ArrayList<UmsTaskGetDto>();
+        for (UmsTask umsTask : umsTaskRepository.findByAssignee(assignee)) {
+            list.add(mapStructMapper.umsTaskToUmsTaskGetDto(umsTask));
+        }
+
+        return list;
+    }
+
+    public List<UmsTaskGetDto> searchUmsTaskByRequester(String requester){
+        List<UmsTaskGetDto> list = new ArrayList<UmsTaskGetDto>();
+        for (UmsTask umsTask : umsTaskRepository.findByRequester(requester)) {
+            list.add(mapStructMapper.umsTaskToUmsTaskGetDto(umsTask));
+        }
+
+        return list;
+    }
 
     /**
      * Return number of UmsTasks

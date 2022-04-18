@@ -135,6 +135,7 @@ public class generateUmsTasks {
         bw.close();
     }
 
+    //TODO: Replace with UmsTaskDto
     @JsonPropertyOrder({"process_instance_id", "name", "requester", "assignee", "priority", "dueDate",
             "recievedDate", "loe", "status", "description"})
     public static class TestUmsTask{

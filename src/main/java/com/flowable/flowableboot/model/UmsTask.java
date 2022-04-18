@@ -90,8 +90,8 @@ public class UmsTask extends BaseEntity{
         this.assignee = assignee;
     }
 
-    public int getPriority() {
-        return priority.getValue();
+    public Priority getPriority() {
+        return priority;
     }
 
     public void setPriority(Priority priority) {
@@ -114,16 +114,16 @@ public class UmsTask extends BaseEntity{
         this.receivedDate = receivedDate;
     }
 
-    public String getLoe() {
-        return loe.loe();
+    public Loe getLoe() {
+        return loe;
     }
 
     public void setLoe(Loe loe) {
         this.loe = loe;
     }
 
-    public String getStatus() {
-        return status.status();
+    public Status getStatus() {
+        return status;
     }
 
     public void setStatus(Status status) {

@@ -2,6 +2,7 @@ package com.flowable.flowableboot.model;
 
 import javax.persistence.AttributeConverter;
 
+
 public class PriorityAttributeConverter implements AttributeConverter<Priority, Integer> {
     @Override
     public Integer convertToDatabaseColumn(Priority priority) {

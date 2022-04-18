@@ -3,6 +3,7 @@ package com.flowable.flowableboot;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.flowable.flowableboot.dtos.UmsTaskPostDto;
 import com.flowable.flowableboot.service.FlowableService;
 import com.flowable.flowableboot.service.UmsTaskService;
 import com.flowable.flowableboot.utils.generateUmsTasks;
@@ -40,18 +41,24 @@ public class FlowablebootApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		createUMSTasks(importFile).forEach(testUmsTask -> umsTaskService.createUmsTask(
-				testUmsTask.getProcess_instance_id(),
-				testUmsTask.getName(),
-				testUmsTask.getRequester(),
-				testUmsTask.getAssignee(),
-				testUmsTask.getPriority(),
-				testUmsTask.getDueDate(),
-				testUmsTask.getReceivedDate(),
-				testUmsTask.getLoe(),
-				testUmsTask.getStatus(),
-				testUmsTask.getDescription()
-		)); ;
+
+		for(generateUmsTasks.TestUmsTask testUmsTask: createUMSTasks(importFile)){
+			UmsTaskPostDto tempPost = new UmsTaskPostDto();
+			tempPost.setProcess_instance_id(testUmsTask.getProcess_instance_id());
+			tempPost.setName(testUmsTask.getName());
+			tempPost.setRequester(testUmsTask.getRequester());
+			tempPost.setAssignee(testUmsTask.getAssignee());
+			tempPost.setPriority(testUmsTask.getPriority());
+			tempPost.setDueDate(testUmsTask.getDueDate());
+			tempPost.setReceivedDate(testUmsTask.getReceivedDate());
+			tempPost.setLoe(testUmsTask.getLoe());
+			tempPost.setStatus(testUmsTask.getStatus());
+			tempPost.setDescription(testUmsTask.getDescription());
+
+			umsTaskService.createUmsTask(tempPost);
+		}
+
+
 		long numOfTasks = umsTaskService.total();
 	}
 
