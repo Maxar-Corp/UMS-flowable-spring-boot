@@ -34,12 +34,6 @@ public class UmsTaskController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Void> createUmsTask(@Valid @RequestBody UmsTaskPostDto umsTaskPostDto){
-        umsTaskService.createUmsTask(umsTaskPostDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
     @GetMapping("search/findByAssignee")
     public ResponseEntity<List<UmsTaskGetDto>> searchByAssignee(@RequestParam String assignee){
         List<UmsTaskGetDto> list = umsTaskService.searchUmsTaskByAssignee(assignee);
@@ -51,4 +45,18 @@ public class UmsTaskController {
         List<UmsTaskGetDto> list = umsTaskService.searchUmsTaskByRequester(requester);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    @PostMapping
+    public ResponseEntity<Void> createUmsTask(@Valid @RequestBody UmsTaskPostDto umsTaskPostDto){
+        umsTaskService.createUmsTask(umsTaskPostDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UmsTaskGetDto> updateUmsTask(@PathVariable("id") long id,
+                                                       @RequestBody UmsTaskPostDto umsTaskPostDto){
+        UmsTaskGetDto updatedUmsTask = umsTaskService.updateUmsTask(id, umsTaskPostDto);
+        return new ResponseEntity<>(updatedUmsTask, HttpStatus.OK);
+    }
+
 }

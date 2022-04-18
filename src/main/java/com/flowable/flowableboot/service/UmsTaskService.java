@@ -10,8 +10,10 @@ import com.flowable.flowableboot.model.UmsTask;
 import com.flowable.flowableboot.repository.UmsTaskRepository;
 import org.flowable.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,27 @@ public class UmsTaskService {
         }
 
         umsTaskRepository.save(mapStructMapper.umsTaskPostDtoToUmsTask(umsTaskPostDto));
+    }
+
+    public UmsTaskGetDto updateUmsTask(Long id, UmsTaskPostDto umsTaskPostDto){
+        UmsTask existingUmsTask = umsTaskRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Did not find UmsTask with id = " + id));
+
+        existingUmsTask.setProcess_instance_id(umsTaskPostDto.getProcess_instance_id());
+        existingUmsTask.setName(umsTaskPostDto.getName());
+        existingUmsTask.setRequester(umsTaskPostDto.getRequester());
+        existingUmsTask.setAssignee(umsTaskPostDto.getAssignee());
+        existingUmsTask.setPriority(Priority.valueOf(umsTaskPostDto.getPriority()));
+        existingUmsTask.setDueDate(umsTaskPostDto.getDueDate());
+        existingUmsTask.setReceivedDate(umsTaskPostDto.getReceivedDate());
+        existingUmsTask.setLoe(Loe.valueOfLoe(umsTaskPostDto.getLoe()));
+        existingUmsTask.setStatus(Status.valueOfStatus(umsTaskPostDto.getStatus()));
+        existingUmsTask.setDescription(umsTaskPostDto.getDescription());
+        existingUmsTask.setUpdatedDate(Instant.now());
+
+        UmsTaskGetDto updatedUmsTask = mapStructMapper.umsTaskToUmsTaskGetDto(umsTaskRepository.save(existingUmsTask));
+
+        return updatedUmsTask;
     }
 
     /**
