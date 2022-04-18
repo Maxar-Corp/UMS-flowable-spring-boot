@@ -1,9 +1,9 @@
 package com.flowable.flowableboot.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.flowable.flowableboot.model.Priority;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 
@@ -12,19 +12,20 @@ public class UmsTaskPostDto{
     @JsonProperty("process_instance_id")
     private String process_instance_id;
 
-    @NotNull
     @JsonProperty("name")
+    @NotEmpty(message = "name of task cannot be empty")
     private String name;
 
-    @NotNull
     @JsonProperty("requester")
+    @NotEmpty(message = "requester cannot be empty")
     private String requester;
 
-    @NotNull
     @JsonProperty("assignee")
+    @NotEmpty(message = "assignee cannot be empty")
     private String assignee;
 
     @JsonProperty("priority")
+    @Max(3)
     private int priority;
 
     @JsonProperty("dueDate")

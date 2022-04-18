@@ -39,17 +39,7 @@ public class UmsTaskService {
      * @exception RuntimeException if associated process id is not verified
      */
     public void createUmsTask(UmsTaskPostDto umsTaskPostDto){
-
-        // TODO: Hook into workflow engine
-        // ProcessInstance pi = runtimeService.createProcessInstanceQuery()
-        //        .processInstanceId(process_instance_id).singleResult();
-
-        //TODO: Exception Handling
-        if(umsTaskPostDto.getProcess_instance_id().isEmpty()){
-            throw new RuntimeException("Process instance did not exist in workflow engine.");
-        }
-
-        umsTaskRepository.save(mapStructMapper.umsTaskPostDtoToUmsTask(umsTaskPostDto));
+                umsTaskRepository.save(mapStructMapper.umsTaskPostDtoToUmsTask(umsTaskPostDto));
     }
 
     public UmsTaskGetDto updateUmsTask(Long id, UmsTaskPostDto umsTaskPostDto){
