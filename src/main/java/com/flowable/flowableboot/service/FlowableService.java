@@ -95,18 +95,16 @@ public class FlowableService {
 
     if(assign.containsKey("assignee") && assign.get("assignee") != ""){
       variables.put("assignee", assign.get("assignee"));
-    } else if(assign.containsKey("requester") && assign.get("requester") != ""){
-      variables.put("requester", assign.get("requester"));
-    }else{
-      // If not assignee is set, assign to assigner
-      variables.put("requester", taskVars.get("requester").toString());
-      variables.put("assignee", taskVars.get("requester").toString());
+      this.taskService.complete(task.getId(), variables);
+    }else if (taskVars.get("assignee").toString() != null){
+      // If not assignee is set, assignee to the assignee process variable
+      variables.put("assignee", taskVars.get("assignee").toString());
+      this.taskService.complete(task.getId(), variables);
     }
-    this.taskService.complete(task.getId(), variables);
   }
 
   public void setStatus(String status, String taskId){
-    Map<String, Object> variables = new HashMap<>();
+    Map<String, Object> variables;
     if(status == ""){
       variables = this.taskService.getVariables(taskId);
       status = variables.get("status").toString();

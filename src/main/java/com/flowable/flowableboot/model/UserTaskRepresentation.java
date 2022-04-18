@@ -9,7 +9,7 @@ import java.util.Map;
 public class UserTaskRepresentation {
   private String id;
   private String status;
-  private Map<String, String> assign = new HashMap<String, String>();
+  private Map<String, String> assign;
 
   public UserTaskRepresentation(String id, String status,
       Map<String, String> assign) {
@@ -33,6 +33,9 @@ public class UserTaskRepresentation {
   }
 
   public Map<String, String> getAssign() {
+//    TODO update this logic/remove, sets assignee to default if no assignee provided
+//    String defaultAssignee = assign.getOrDefault("assignee", "default");
+//    assign.put("assignee", defaultAssignee);
     return assign;
   }
 
