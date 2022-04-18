@@ -40,7 +40,7 @@ public class FlowableService {
   }
 
   //  Method to initiate process with an assignee name
-  public void startProcess(String assignee) {
+  public ProcessInstance startProcess(String assignee) {
     // Search person repository by username
     Person person = personRepository.findByUsername(assignee);
     Map<String, Object> variables = new HashMap<String, Object>();
@@ -49,7 +49,8 @@ public class FlowableService {
     // On task creation, task status is set to 'Pending'
     variables.put("status", defaultStatus);
     System.out.println(String.format("requester: %s", variables.get("requester")));
-    runtimeService.startProcessInstanceByKey(processKey, variables);
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processKey, variables);
+    return processInstance;
   }
 
   // Method to get tasks by assignee
