@@ -33,12 +33,6 @@ public class FlowableService {
   @Value("${flowable.process.defaultStatus}")
   public String defaultStatus;
 
-  public void createDemoUsers(){
-//    if (personRepository.findAll().size() == 0){
-//      personRepository.save(new Person("estyl", "pedro", "sorto", new Date()));
-//    }
-  }
-
   //  Method to initiate process with an assignee name
   public ProcessInstance startProcess(String assignee) {
     // Search person repository by username
