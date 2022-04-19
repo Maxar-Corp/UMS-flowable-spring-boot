@@ -17,7 +17,7 @@ public class FlowablebootApplication {
 
 	@Bean
 	public CommandLineRunner init(final FlowableService flowableService) {
-		return strings -> flowableService.createDemoUsers();
+		return null;
 	}
 }
 
