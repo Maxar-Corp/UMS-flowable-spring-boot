@@ -1,7 +1,7 @@
 # Running the application
 
 ## This flowable springboot application uses the following technologies:
-- Java version 11
+- Java version 8
 - Spring Boot Start Parent 2.6.3
 - Flowable Spring Boot Start 6.7.2
 
@@ -26,3 +26,6 @@
 - Upon sending the curl request the tasks endpoint should return an empty list of tasks
     - curl http://localhost:8080/tasks\?assignee\=PEDROSORTO
     - []
+
+## API Documentation
+The Swagger API documentation generated is located at:  `http:/localhost:8080/swagger-ui.html`
