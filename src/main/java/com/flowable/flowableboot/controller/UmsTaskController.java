@@ -70,7 +70,9 @@ public class UmsTaskController {
         if(umsTaskPostDto.getProcess_instance_id().isEmpty()){
             throw new RecordNotFoundException("Invalid process instance with id:  " + umsTaskPostDto.getProcess_instance_id());
         }
-        umsTaskService.createUmsTask(umsTaskPostDto);
+        if(umsTaskService.createUmsTask(umsTaskPostDto) == null){
+            throw new RuntimeException("UmsTask was not created.");
+        }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

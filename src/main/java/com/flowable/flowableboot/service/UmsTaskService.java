@@ -38,8 +38,8 @@ public class UmsTaskService {
      *
      * @exception RuntimeException if associated process id is not verified
      */
-    public void createUmsTask(UmsTaskPostDto umsTaskPostDto){
-                umsTaskRepository.save(mapStructMapper.umsTaskPostDtoToUmsTask(umsTaskPostDto));
+    public UmsTask createUmsTask(UmsTaskPostDto umsTaskPostDto){
+              return umsTaskRepository.save(mapStructMapper.umsTaskPostDtoToUmsTask(umsTaskPostDto));
     }
 
     public UmsTaskGetDto updateUmsTask(Long id, UmsTaskPostDto umsTaskPostDto){

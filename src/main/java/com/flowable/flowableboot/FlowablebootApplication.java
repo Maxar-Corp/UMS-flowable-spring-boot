@@ -68,7 +68,7 @@ public class FlowablebootApplication implements CommandLineRunner{
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
 		List<generateUmsTasks.TestUmsTask> tasks = Arrays.asList(mapper.readValue(Paths
-				.get(importFile).toFile(), generateUmsTasks.TestUmsTask[].class));
+				.get(fileToImport).toFile(), generateUmsTasks.TestUmsTask[].class));
 
 		return tasks;
 	}

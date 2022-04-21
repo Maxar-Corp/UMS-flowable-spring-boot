@@ -18,5 +18,4 @@ public interface MapStructMapper {
 
     BaseDto baseEntityToBaseDto(BaseEntity baseEntity);
     BaseEntity baseDtoToBaseEntity(BaseDto baseDto);
-
 }

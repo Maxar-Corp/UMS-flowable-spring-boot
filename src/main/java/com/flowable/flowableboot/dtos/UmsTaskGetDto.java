@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 
-
 public class UmsTaskGetDto extends BaseDto {
 
     @JsonProperty("process_instance_id")
