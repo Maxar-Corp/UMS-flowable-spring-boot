@@ -7,6 +7,7 @@ import com.flowable.flowableboot.dtos.UmsTaskGetDto;
 import com.flowable.flowableboot.dtos.UmsTaskPostDto;
 import com.flowable.flowableboot.model.UmsTask;
 import com.flowable.flowableboot.repository.UmsTaskRepository;
+import com.flowable.flowableboot.service.UmsTaskService;
 import com.flowable.flowableboot.utils.generateUmsTasks;
 import org.junit.After;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,13 +46,6 @@ class UmsTaskServiceTest {
     UmsTaskServiceTest() throws IOException {
     }
 
-    private ObjectMapper getUMSObjectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
-        return mapper;
-    }
 
     @BeforeEach
     public void setup(){
@@ -158,6 +152,14 @@ class UmsTaskServiceTest {
         }
 
         return testList;
+    }
+
+    private ObjectMapper getUMSObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        return mapper;
     }
 
     private void assertUmsTasksEqual(UmsTask reference, UmsTask actual){
