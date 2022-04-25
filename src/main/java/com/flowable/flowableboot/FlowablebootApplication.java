@@ -3,10 +3,9 @@ package com.flowable.flowableboot;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.flowable.flowableboot.dtos.UmsTaskPostDto;
+import com.flowable.flowableboot.dto.UmsTaskPostDto;
 import com.flowable.flowableboot.service.FlowableService;
 import com.flowable.flowableboot.service.UmsTaskService;
-import com.flowable.flowableboot.utils.generateUmsTasks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -42,33 +41,22 @@ public class FlowablebootApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 
-		for(generateUmsTasks.TestUmsTask testUmsTask: createUMSTasks(importFile)){
-			UmsTaskPostDto tempPost = new UmsTaskPostDto();
-			tempPost.setProcess_instance_id(testUmsTask.getProcess_instance_id());
-			tempPost.setName(testUmsTask.getName());
-			tempPost.setRequester(testUmsTask.getRequester());
-			tempPost.setAssignee(testUmsTask.getAssignee());
-			tempPost.setPriority(testUmsTask.getPriority());
-			tempPost.setDueDate(testUmsTask.getDueDate());
-			tempPost.setReceivedDate(testUmsTask.getReceivedDate());
-			tempPost.setLoe(testUmsTask.getLoe());
-			tempPost.setStatus(testUmsTask.getStatus());
-			tempPost.setDescription(testUmsTask.getDescription());
+		for(UmsTaskPostDto testUmsTask: createUMSTasks(importFile)){
 
-			umsTaskService.createUmsTask(tempPost);
+			umsTaskService.createUmsTask(testUmsTask);
 		}
 
 
 		long numOfTasks = umsTaskService.total();
 	}
 
-	private List<generateUmsTasks.TestUmsTask> createUMSTasks(String fileToImport) throws IOException{
+	private List<UmsTaskPostDto> createUMSTasks(String fileToImport) throws IOException{
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.registerModule(new JavaTimeModule());
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-		List<generateUmsTasks.TestUmsTask> tasks = Arrays.asList(mapper.readValue(Paths
-				.get(fileToImport).toFile(), generateUmsTasks.TestUmsTask[].class));
+		List<UmsTaskPostDto> tasks = Arrays.asList(mapper.readValue(Paths
+				.get(fileToImport).toFile(), UmsTaskPostDto[].class));
 
 		return tasks;
 	}

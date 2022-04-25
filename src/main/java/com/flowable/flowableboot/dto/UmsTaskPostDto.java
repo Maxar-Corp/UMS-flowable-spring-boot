@@ -1,24 +1,31 @@
-package com.flowable.flowableboot.dtos;
+package com.flowable.flowableboot.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
-public class UmsTaskGetDto extends BaseDto {
+
+public class UmsTaskPostDto{
 
     @JsonProperty("process_instance_id")
     private String process_instance_id;
 
     @JsonProperty("name")
+    @NotEmpty(message = "name of task cannot be empty")
     private String name;
 
     @JsonProperty("requester")
+    @NotEmpty(message = "requester cannot be empty")
     private String requester;
 
     @JsonProperty("assignee")
+    @NotEmpty(message = "assignee cannot be empty")
     private String assignee;
 
     @JsonProperty("priority")
+    @Max(3)
     private int priority;
 
     @JsonProperty("dueDate")
@@ -35,6 +42,22 @@ public class UmsTaskGetDto extends BaseDto {
 
     @JsonProperty("description")
     private String description;
+
+    public UmsTaskPostDto(String process_instance_id, String name, String requester, String assignee, int priority,
+                          LocalDateTime dDate, LocalDateTime recDate, String loe, String status, String description) {
+        this.process_instance_id = process_instance_id;
+        this.name = name;
+        this.requester = requester;
+        this.assignee = assignee;
+        this.priority = priority;
+        this.dueDate = dDate;
+        this.receivedDate = recDate;
+        this.loe = loe;
+        this.status = status;
+        this.description = description;
+    }
+
+    public UmsTaskPostDto(){}
 
     public String getProcess_instance_id() {
         return process_instance_id;

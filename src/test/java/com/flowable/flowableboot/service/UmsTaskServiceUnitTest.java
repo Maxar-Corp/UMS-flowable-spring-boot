@@ -3,26 +3,19 @@ package com.flowable.flowableboot.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.flowable.flowableboot.dtos.UmsTaskGetDto;
-import com.flowable.flowableboot.dtos.UmsTaskPostDto;
+import com.flowable.flowableboot.dto.UmsTaskGetDto;
+import com.flowable.flowableboot.dto.UmsTaskPostDto;
 import com.flowable.flowableboot.mappers.MapStructMapper;
-import com.flowable.flowableboot.mappers.MapStructMapperImpl;
 import com.flowable.flowableboot.model.UmsTask;
 import com.flowable.flowableboot.repository.UmsTaskRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,7 +25,6 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
-
 public class UmsTaskServiceUnitTest {
 
     private UmsTaskService umsTaskService;
@@ -66,9 +58,78 @@ public class UmsTaskServiceUnitTest {
 
         UmsTask test = umsTaskService.createUmsTask(umsTaskPostDtos.get(0));
 
-        verify(umsTaskRepository, atLeastOnce()).save(any(UmsTask.class));
+        verify(umsTaskRepository, times(1)).save(any(UmsTask.class));
+        verify(mapStructMapper, times(1)).umsTaskPostDtoToUmsTask(any(UmsTaskPostDto.class));
         assertNotNull(test);
-        // need test for mapstruct call/mock
+    }
+
+    @Test
+    public void updateUmsTask(){
+        lenient().when(mapStructMapper.umsTaskToUmsTaskGetDto(any(UmsTask.class))).thenReturn(umsTaskGetDtoList.get(0));
+        lenient().when(umsTaskRepository.save(any(UmsTask.class))).thenReturn(umsTaskList.get(0));
+        lenient().when(umsTaskRepository.findById(anyLong())).thenReturn(java.util.Optional.ofNullable(umsTaskList.get(0)));
+
+        long testId = 1;
+
+        UmsTaskGetDto test = umsTaskService.updateUmsTask(testId, umsTaskPostDtos.get(0));
+
+        verify(umsTaskRepository, times(1)).findById(anyLong());
+        verify(umsTaskRepository, times(1)).save(any(UmsTask.class));
+        verify(mapStructMapper, times(1)).umsTaskToUmsTaskGetDto(any(UmsTask.class));
+        assertNotNull(test);
+    }
+
+    @Test
+    public void getAllUmsTasks(){
+
+        lenient().when(mapStructMapper.umsTaskListToUmsTaskGetDto(any(Iterable.class))).thenReturn(umsTaskGetDtoList);
+
+        lenient().when(umsTaskRepository.findAll()).thenReturn(umsTaskList);
+
+        List<UmsTaskGetDto>  test = umsTaskService.getAllUmsTasks();
+
+        verify(umsTaskRepository, times(1)).findAll();
+        verify(mapStructMapper, times(1)).umsTaskListToUmsTaskGetDto(any(Iterable.class));
+        assertNotNull(test);
+        assertEquals(4, test.size());
+    }
+
+    @Test
+    public void searchUmsTaskByAssignee(){
+
+        lenient().when(mapStructMapper.umsTaskListToUmsTaskGetDto(any(Iterable.class))).thenReturn(umsTaskGetDtoList);
+
+        lenient().when(umsTaskRepository.findByAssignee(anyString())).thenReturn(umsTaskList);
+
+        List<UmsTaskGetDto>  test = umsTaskService.searchUmsTaskByAssignee("Test");
+
+        verify(umsTaskRepository, times(1)).findByAssignee(anyString());
+        verify(mapStructMapper, times(1)).umsTaskListToUmsTaskGetDto(any(Iterable.class));
+        assertNotNull(test);
+        assertEquals(4, test.size());
+    }
+
+    @Test
+    public void searchUmsTaskByRequester(){
+        lenient().when(mapStructMapper.umsTaskListToUmsTaskGetDto(any(Iterable.class))).thenReturn(umsTaskGetDtoList);
+
+        lenient().when(umsTaskRepository.findByRequester(anyString())).thenReturn(umsTaskList);
+
+        List<UmsTaskGetDto>  test = umsTaskService.searchUmsTaskByRequester("Test");
+
+        verify(umsTaskRepository, times(1)).findByRequester(anyString());
+        verify(mapStructMapper, times(1)).umsTaskListToUmsTaskGetDto(any(Iterable.class));
+        assertNotNull(test);
+        assertEquals(4, test.size());
+    }
+
+    @Test
+    public void totalTest(){
+
+        long total = umsTaskService.total();
+
+        verify(umsTaskRepository, times(1)).count();
+        assertNotNull(total);
     }
 
     private ObjectMapper getUMSObjectMapper() {
@@ -77,28 +138,6 @@ public class UmsTaskServiceUnitTest {
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         return mapper;
-    }
-
-    /**private ArrayList<UmsTask> loadListOfTasks(){
-        ArrayList<UmsTask> testList = new ArrayList<>();
-
-        for(UmsTaskPostDto umsTaskPostDto: umsTaskPostDtos){
-            testList.add(umsTaskService.createUmsTask(umsTaskPostDto));
-        }
-
-        return testList;
-    } **/
-
-    private void assertUmsTasksEqual(UmsTask reference, UmsTask actual){
-        assertEquals(reference.getProcess_instance_id(), actual.getProcess_instance_id());
-        assertEquals(reference.getDescription(), actual.getDescription());
-        assertEquals(reference.getAssignee(), actual.getAssignee());
-        assertEquals(reference.getRequester(), actual.getRequester());
-        assertEquals(reference.getPriority(), actual.getPriority());
-        assertEquals(reference.getStatus(), actual.getStatus());
-        assertEquals(reference.getLoe(), actual.getLoe());
-        assertEquals(reference.getDueDate(), actual.getDueDate());
-        assertEquals(reference.getReceivedDate(), actual.getReceivedDate());
     }
 
 }

@@ -1,4 +1,4 @@
-package com.flowable.flowableboot.dtos;
+package com.flowable.flowableboot.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

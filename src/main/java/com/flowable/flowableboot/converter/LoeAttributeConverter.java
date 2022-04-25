@@ -1,4 +1,6 @@
-package com.flowable.flowableboot.model;
+package com.flowable.flowableboot.converter;
+
+import com.flowable.flowableboot.model.Loe;
 
 import javax.persistence.AttributeConverter;
 

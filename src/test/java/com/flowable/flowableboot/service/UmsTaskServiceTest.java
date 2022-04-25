@@ -3,28 +3,25 @@ package com.flowable.flowableboot.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.flowable.flowableboot.dtos.UmsTaskGetDto;
-import com.flowable.flowableboot.dtos.UmsTaskPostDto;
+import com.flowable.flowableboot.dto.UmsTaskGetDto;
+import com.flowable.flowableboot.dto.UmsTaskPostDto;
 import com.flowable.flowableboot.model.UmsTask;
-import com.flowable.flowableboot.repository.UmsTaskRepository;
-import com.flowable.flowableboot.service.UmsTaskService;
-import com.flowable.flowableboot.utils.generateUmsTasks;
-import org.junit.After;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class UmsTaskServiceTest {
 

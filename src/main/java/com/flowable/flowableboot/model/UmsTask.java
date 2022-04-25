@@ -1,6 +1,10 @@
 package com.flowable.flowableboot.model;
 
 
+import com.flowable.flowableboot.converter.LoeAttributeConverter;
+import com.flowable.flowableboot.converter.PriorityAttributeConverter;
+import com.flowable.flowableboot.converter.StatusAttributeConverter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;

@@ -1,11 +1,8 @@
 package com.flowable.flowableboot.controller;
 
 
-import com.flowable.flowableboot.dtos.UmsTaskGetDto;
-import com.flowable.flowableboot.dtos.UmsTaskPostDto;
-import com.flowable.flowableboot.exception.RecordNotFoundException;
-import com.flowable.flowableboot.mappers.MapStructMapper;
-import com.flowable.flowableboot.model.UmsTask;
+import com.flowable.flowableboot.dto.UmsTaskGetDto;
+import com.flowable.flowableboot.dto.UmsTaskPostDto;
 import com.flowable.flowableboot.service.UmsTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +25,7 @@ public class UmsTaskController {
         this.umsTaskService = umsTaskService;
     }
 
-    protected UmsTaskController(){}
+    public UmsTaskController(){}
 
     @GetMapping
     public ResponseEntity<List<UmsTaskGetDto>> getAllUmsTasks(){
@@ -37,11 +34,11 @@ public class UmsTaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UmsTaskGetDto> updateUmsTask(@PathVariable("id") int id){
+    public ResponseEntity<UmsTaskGetDto> getUmsTask(@PathVariable("id") int id){
         //TODO: Check for the correct way to implement - maybe just provide uri
         UmsTaskGetDto umsTaskGetDto = umsTaskService.getAllUmsTasks().get(id -1);
         if(umsTaskGetDto==null){
-            throw new RecordNotFoundException("Invalid UmsTask id: " + id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(umsTaskGetDto, HttpStatus.OK);
@@ -68,7 +65,7 @@ public class UmsTaskController {
 
         //TODO: Exception Handling - this could/might check if the process was created above
         if(umsTaskPostDto.getProcess_instance_id().isEmpty()){
-            throw new RecordNotFoundException("Invalid process instance with id:  " + umsTaskPostDto.getProcess_instance_id());
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         if(umsTaskService.createUmsTask(umsTaskPostDto) == null){
             throw new RuntimeException("UmsTask was not created.");
@@ -81,7 +78,7 @@ public class UmsTaskController {
                                                        @RequestBody @Validated UmsTaskPostDto umsTaskPostDto){
         UmsTaskGetDto updatedUmsTask = umsTaskService.updateUmsTask(id, umsTaskPostDto);
         if(updatedUmsTask==null){
-            throw new RecordNotFoundException("Invalid UmsTask id: " + id);
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
         return new ResponseEntity<>(updatedUmsTask, HttpStatus.OK);
