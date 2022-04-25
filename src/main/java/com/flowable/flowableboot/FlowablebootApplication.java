@@ -35,7 +35,7 @@ public class FlowablebootApplication implements CommandLineRunner{
 
 	@Bean
 	public CommandLineRunner init(final FlowableService flowableService) {
-		return strings -> flowableService.createDemoUsers();
+		return null;
 	}
 
 	@Override

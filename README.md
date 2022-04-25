@@ -1,7 +1,7 @@
 # Running the application
 
 ## This flowable springboot application uses the following technologies:
-- Java version 11
+- Java version 8
 - Spring Boot Start Parent 2.6.3
 - Flowable Spring Boot Start 6.7.2
 

@@ -3,11 +3,14 @@
 // Tasks can vary from users tasks, services, etc.
 package com.flowable.flowableboot.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TaskRepresentation {
   private String id;
   private String name;
 
-  public TaskRepresentation(String id, String name){
+  public TaskRepresentation(String id, String name) {
     this.id = id;
     this.name = name;
   }
@@ -24,4 +27,5 @@ public class TaskRepresentation {
   public void setName(String name){
     this.name = name;
   }
+
 }

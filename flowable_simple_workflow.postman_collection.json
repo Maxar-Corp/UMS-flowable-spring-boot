@@ -1,0 +1,295 @@
+{
+	"info": {
+		"_postman_id": "013136d1-5598-47a1-8046-119b25040ab7",
+		"name": "Flowable Example Workflow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"followOriginalHttpMethod": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"requester\",\n    \"firstName\": \"test_first\",\n    \"lastName\": \"test_last\",\n    \"birthDate\": \"1999-07-23\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}user",
+					"host": [
+						"{{endpoint}}user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start Workflow",
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"followOriginalHttpMethod": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"assignee\": \"requester\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{endpoint}}process",
+					"host": [
+						"{{endpoint}}process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Requester Task ID pt1",
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"followOriginalHttpMethod": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}tasks?assignee=requester",
+					"host": [
+						"{{endpoint}}tasks"
+					],
+					"query": [
+						{
+							"key": "assignee",
+							"value": "requester"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requester UserTask: Assign user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"<requester task id>\", \n    \"status\":\"complete\", \n    \"assign\":{\"assignee\":\"assignee\"}\n}"
+				},
+				"url": {
+					"raw": "{{endpoint}}usertask",
+					"host": [
+						"{{endpoint}}usertask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve assignee task ID pt1",
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"followOriginalHttpMethod": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}tasks?assignee=assignee",
+					"host": [
+						"{{endpoint}}tasks"
+					],
+					"query": [
+						{
+							"key": "assignee",
+							"value": "assignee"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assignee Set task to \"In progress\"",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"<assignee task id pt1>\", \n    \"status\":\"in progress\", \n    \"assign\":{\"assignee\":\"assignee\"}\n}"
+				},
+				"url": {
+					"raw": "{{endpoint}}usertask",
+					"host": [
+						"{{endpoint}}usertask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve assignee task ID pt 2",
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"followOriginalHttpMethod": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}tasks?assignee=assignee",
+					"host": [
+						"{{endpoint}}tasks"
+					],
+					"query": [
+						{
+							"key": "assignee",
+							"value": "assignee"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assignee set task to \"To Review\"",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"<assignee task id pt 2>\", \n    \"status\":\"to review\", \n    \"assign\":{\"assignee\":\"assignee\"}\n}"
+				},
+				"url": {
+					"raw": "{{endpoint}}usertask",
+					"host": [
+						"{{endpoint}}usertask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve requester task id pt2",
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"followOriginalHttpMethod": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}tasks?assignee=requester",
+					"host": [
+						"{{endpoint}}tasks"
+					],
+					"query": [
+						{
+							"key": "assignee",
+							"value": "requester"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requester set task to \"complete\"",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"<requester task id pt2>\", \n    \"status\":\"complete\", \n    \"assign\":{\"assignee\":\"assignee\"}\n}"
+				},
+				"url": {
+					"raw": "{{endpoint}}usertask",
+					"host": [
+						"{{endpoint}}usertask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Return all processes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}processes?delete=false",
+					"host": [
+						"{{endpoint}}processes"
+					],
+					"query": [
+						{
+							"key": "delete",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all active processes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}processes?delete=true",
+					"host": [
+						"{{endpoint}}processes"
+					],
+					"query": [
+						{
+							"key": "delete",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
