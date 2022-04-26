@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Priority {
-    FIRST(1), SECOND(2), THIRD(3);
+    FIRST(1), THIRD(3), FIFTH(5);
 
     private final int value;
     private static Map map = new HashMap<>();

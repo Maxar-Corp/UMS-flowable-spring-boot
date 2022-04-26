@@ -20,7 +20,7 @@
     "name" : "Presentation: Company X",
     "requester" : "Paige Turner",
     "assignee" : "Hank R. Cheef",
-    "priority" : "SECOND",
+    "priority" : "FIFTH",
     "dueDate" : "2022-04-20T19:45:00.447",
     "loe" : "HIGH",
     "status" : "TO_REVIEW",

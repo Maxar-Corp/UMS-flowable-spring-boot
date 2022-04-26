@@ -17,7 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UmsTaskControllerTest {
 
-    @Autowired UmsTaskController umsTaskController;
+    @Autowired
+    private UmsTaskController umsTaskController;
 
     @Test
     void getAllUmsTasks() {
@@ -44,7 +45,7 @@ class UmsTaskControllerTest {
 
     @Test
     void searchByAssignee() {
-        ResponseEntity<List<UmsTaskGetDto>> test = umsTaskController.searchByAssignee("Rose Bush");
+        ResponseEntity<List<UmsTaskGetDto>> test = umsTaskController.searchByAssignee("Mike Rowe-Soft");
 
         List<UmsTaskGetDto> testList = test.getBody();
 
@@ -55,7 +56,7 @@ class UmsTaskControllerTest {
 
     @Test
     void searchByRequester() {
-        ResponseEntity<List<UmsTaskGetDto>> test = umsTaskController.searchByRequester("Simon Sais");
+        ResponseEntity<List<UmsTaskGetDto>> test = umsTaskController.searchByRequester("Paige Turner");
 
         List<UmsTaskGetDto> testList = test.getBody();
 

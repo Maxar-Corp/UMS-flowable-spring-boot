@@ -20,7 +20,7 @@ class UmsTaskPostDtoTest {
         umsTaskPostDto.setName("test task");
         umsTaskPostDto.setRequester("requester");
         umsTaskPostDto.setAssignee("assignee");
-        umsTaskPostDto.setPriority(2);
+        umsTaskPostDto.setPriority(3);
         umsTaskPostDto.setDueDate(test);
         umsTaskPostDto.setReceivedDate(test);
         umsTaskPostDto.setLoe("Medium");
@@ -42,7 +42,7 @@ class UmsTaskPostDtoTest {
         assertEquals("test task", umsTaskPostDto.getName());
         assertEquals("requester", umsTaskPostDto.getRequester());
         assertEquals("assignee", umsTaskPostDto.getAssignee());
-        assertEquals(2, umsTaskPostDto.getPriority());
+        assertEquals(3, umsTaskPostDto.getPriority());
         assertEquals(test, umsTaskPostDto.getDueDate());
         assertEquals(test, umsTaskPostDto.getReceivedDate());
         assertEquals("Medium", umsTaskPostDto.getLoe());

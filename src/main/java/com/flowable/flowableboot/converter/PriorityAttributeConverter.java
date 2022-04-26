@@ -14,10 +14,10 @@ public class PriorityAttributeConverter implements AttributeConverter<Priority, 
         switch (priority){
             case FIRST:
                 return 1;
-            case SECOND:
-                return 2;
             case THIRD:
                 return 3;
+            case FIFTH:
+                return 5;
             default:
                 throw new IllegalArgumentException(priority + " not supported.");
         }
@@ -32,10 +32,10 @@ public class PriorityAttributeConverter implements AttributeConverter<Priority, 
         switch (integer){
             case 1:
                 return Priority.FIRST;
-            case 2:
-                return Priority.SECOND;
             case 3:
                 return Priority.THIRD;
+            case 5:
+                return Priority.FIFTH;
             default:
                 throw new IllegalArgumentException(integer + " not supported.");
         }
