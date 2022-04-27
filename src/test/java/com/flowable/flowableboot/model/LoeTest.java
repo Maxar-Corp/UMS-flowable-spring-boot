@@ -8,16 +8,16 @@ class LoeTest {
 
     @Test
     void loe() {
-        assertEquals("High", Loe.HIGH.loe());
-        assertEquals("Medium", Loe.MEDIUM.loe());
-        assertEquals("Low", Loe.LOW.loe());
+        assertEquals(1, Loe.ONE.value);
+        assertEquals(3, Loe.THREE.value);
+        assertEquals(5, Loe.FIVE.value);
     }
 
     @Test
     void valueOfLoe() {
-        assertEquals(Loe.HIGH, Loe.valueOfLoe("High"));
-        assertEquals(Loe.MEDIUM, Loe.valueOfLoe("Medium"));
-        assertEquals(Loe.LOW, Loe.valueOfLoe("Low"));
+        assertEquals(Loe.ONE, Loe.valueOf(1));
+        assertEquals(Loe.THREE, Loe.valueOf(3));
+        assertEquals(Loe.FIVE, Loe.valueOf(5));
 
     }
 }

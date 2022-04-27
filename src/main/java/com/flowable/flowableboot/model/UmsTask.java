@@ -151,11 +151,11 @@ public class UmsTask extends BaseEntity{
                 ", name='" + name + '\'' +
                 ", requester='" + requester + '\'' +
                 ", assignee=" + assignee +
-                ", priority='" + priority.getValue() + '\'' +
+                ", priority='" + priority.getPriority() + '\'' +
                 ", dueDate='" + dueDate + '\'' +
                 ", receivedDate='" + receivedDate + '\'' +
-                ", loe=" + loe.loe() +
-                ", status=" + status.status() +
+                ", loe=" + loe.getValue() +
+                ", status=" + status.getStatus() +
                 ", description=" + description +
                 ", createdDate=" + this.getCreatedDate() +
                 ", updatedDate=" + this.getUpdatedDate() +

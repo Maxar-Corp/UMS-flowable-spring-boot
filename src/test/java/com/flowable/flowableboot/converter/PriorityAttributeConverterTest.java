@@ -11,13 +11,13 @@ class PriorityAttributeConverterTest {
 
     @Test
     void convertToDatabaseColumn() {
-        Integer first = priorityAttributeConverter.convertToDatabaseColumn(Priority.FIRST);
-        Integer third = priorityAttributeConverter.convertToDatabaseColumn(Priority.THIRD);
-        Integer fifth = priorityAttributeConverter.convertToDatabaseColumn(Priority.FIFTH);
+        Integer low = priorityAttributeConverter.convertToDatabaseColumn(Priority.LOW);
+        Integer medium = priorityAttributeConverter.convertToDatabaseColumn(Priority.MEDIUM);
+        Integer high = priorityAttributeConverter.convertToDatabaseColumn(Priority.HIGH);
 
-        assertEquals(1, first);
-        assertEquals(3, third);
-        assertEquals(5, fifth);
+        assertEquals(1, low);
+        assertEquals(2, medium);
+        assertEquals(3, high);
     }
 
     @Test
@@ -27,13 +27,13 @@ class PriorityAttributeConverterTest {
 
     @Test
     void convertToEntityAttribute() {
-        Priority first = priorityAttributeConverter.convertToEntityAttribute(1);
-        Priority third = priorityAttributeConverter.convertToEntityAttribute(3);
-        Priority fifth = priorityAttributeConverter.convertToEntityAttribute(5);
+        Priority low = priorityAttributeConverter.convertToEntityAttribute(1);
+        Priority medium = priorityAttributeConverter.convertToEntityAttribute(2);
+        Priority high = priorityAttributeConverter.convertToEntityAttribute(3);
 
-        assertEquals(Priority.FIRST, first);
-        assertEquals(Priority.THIRD, third);
-        assertEquals(Priority.FIFTH, fifth);
+        assertEquals(Priority.LOW, low);
+        assertEquals(Priority.MEDIUM, medium);
+        assertEquals(Priority.HIGH, high);
     }
 
     @Test

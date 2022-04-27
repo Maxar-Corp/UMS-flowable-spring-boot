@@ -7,16 +7,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class PriorityTest {
 
     @Test
-    void getValue() {
-        assertEquals(1, Priority.FIRST.getValue());
-        assertEquals(3, Priority.THIRD.getValue());
-        assertEquals(5, Priority.FIFTH.getValue());
+    void getValueByTitle() {
+        assertEquals(Priority.HIGH, Priority.valueByTitle("High"));
+        assertEquals(Priority.MEDIUM, Priority.valueByTitle("Medium"));
+        assertEquals(Priority.LOW, Priority.valueByTitle("Low"));
     }
 
     @Test
-    void valueOf() {
-        assertEquals(Priority.FIRST, Priority.valueOf(1));
-        assertEquals(Priority.THIRD, Priority.valueOf(3));
-        assertEquals(Priority.FIFTH, Priority.valueOf(5));
+    void getPriority() {
+        assertEquals("High", Priority.HIGH.getPriority());
+        assertEquals("Medium", Priority.MEDIUM.getPriority());
+        assertEquals("Low", Priority.LOW.getPriority());
     }
+
+    @Test
+    void priorityToString() {
+        assertEquals("High", Priority.HIGH.toString());
+        assertEquals("Medium", Priority.MEDIUM.toString());
+        assertEquals("Low", Priority.LOW.toString());
+    }
+
 }

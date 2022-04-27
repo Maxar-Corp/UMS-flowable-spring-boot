@@ -46,11 +46,11 @@ public class UmsTaskService {
         existingUmsTask.setName(umsTaskPostDto.getName());
         existingUmsTask.setRequester(umsTaskPostDto.getRequester());
         existingUmsTask.setAssignee(umsTaskPostDto.getAssignee());
-        existingUmsTask.setPriority(Priority.valueOf(umsTaskPostDto.getPriority()));
+        existingUmsTask.setPriority(Priority.valueByTitle(umsTaskPostDto.getPriority()));
         existingUmsTask.setDueDate(umsTaskPostDto.getDueDate());
         existingUmsTask.setReceivedDate(umsTaskPostDto.getReceivedDate());
-        existingUmsTask.setLoe(Loe.valueOfLoe(umsTaskPostDto.getLoe()));
-        existingUmsTask.setStatus(Status.valueOfStatus(umsTaskPostDto.getStatus()));
+        existingUmsTask.setLoe(Loe.valueOf(umsTaskPostDto.getLoe()));
+        existingUmsTask.setStatus(Status.valueByTitle(umsTaskPostDto.getStatus()));
         existingUmsTask.setDescription(umsTaskPostDto.getDescription());
         existingUmsTask.setUpdatedDate(Instant.now());
 

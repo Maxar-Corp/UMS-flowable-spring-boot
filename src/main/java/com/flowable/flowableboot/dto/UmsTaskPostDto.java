@@ -25,8 +25,7 @@ public class UmsTaskPostDto{
     private String assignee;
 
     @JsonProperty("priority")
-    @Max(3)
-    private int priority;
+    private String priority;
 
     @JsonProperty("dueDate")
     private LocalDateTime dueDate;
@@ -35,7 +34,7 @@ public class UmsTaskPostDto{
     private LocalDateTime receivedDate;
 
     @JsonProperty("loe")
-    private String loe;
+    private int loe;
 
     @JsonProperty("status")
     private String status;
@@ -43,15 +42,17 @@ public class UmsTaskPostDto{
     @JsonProperty("description")
     private String description;
 
-    public UmsTaskPostDto(String process_instance_id, String name, String requester, String assignee, int priority,
-                          LocalDateTime dDate, LocalDateTime recDate, String loe, String status, String description) {
+    public UmsTaskPostDto(String process_instance_id, @NotEmpty(message = "name of task cannot be empty")
+            String name, @NotEmpty(message = "requester cannot be empty") String requester,
+                          @NotEmpty(message = "assignee cannot be empty") String assignee, String priority,
+                          LocalDateTime dueDate, LocalDateTime receivedDate, int loe, String status, String description) {
         this.process_instance_id = process_instance_id;
         this.name = name;
         this.requester = requester;
         this.assignee = assignee;
         this.priority = priority;
-        this.dueDate = dDate;
-        this.receivedDate = recDate;
+        this.dueDate = dueDate;
+        this.receivedDate = receivedDate;
         this.loe = loe;
         this.status = status;
         this.description = description;
@@ -91,11 +92,11 @@ public class UmsTaskPostDto{
         this.assignee = assignee;
     }
 
-    public int getPriority() {
+    public String getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(String priority) {
         this.priority = priority;
     }
 
@@ -115,11 +116,11 @@ public class UmsTaskPostDto{
         this.receivedDate = receivedDate;
     }
 
-    public String getLoe() {
+    public int getLoe() {
         return loe;
     }
 
-    public void setLoe(String loe) {
+    public void setLoe(int loe) {
         this.loe = loe;
     }
 

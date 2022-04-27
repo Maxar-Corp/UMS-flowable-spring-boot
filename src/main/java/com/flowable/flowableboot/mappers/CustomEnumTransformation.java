@@ -7,20 +7,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CustomEnumTransformation{
-    public int asInt(Priority priority){
-        return priority.getValue();
+    public String asString(Priority priority){
+        return priority.getPriority();
     }
 
-    public Priority asPriority(int p){
-        return Priority.valueOf(p);
+    public Priority asPriority(String p){
+        return Priority.valueByTitle(p);
     }
 
-    public String asString(Status status) {return status.status();}
+    public String asString(Status status) {return status.getStatus();}
 
-    public Status asStatus(String status) {return Status.valueOfStatus(status);}
+    public Status asStatus(String status) {return Status.valueByTitle(status);}
 
-    public String asString(Loe loe) {return loe.loe();}
+    public int asInt(Loe loe) {return loe.getValue();}
 
-    public Loe asLoe(String loe) {return Loe.valueOfLoe(loe);}
+    public Loe asLoe(int loe) {return Loe.valueOf(loe);}
 
 }

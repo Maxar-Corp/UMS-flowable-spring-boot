@@ -11,12 +11,12 @@ public class LoeAttributeConverter implements AttributeConverter<Loe, Integer> {
             return null;
 
         switch (loe){
-            case HIGH:
+            case ONE:
                 return 1;
-            case MEDIUM:
-                return 2;
-            case LOW:
+            case THREE:
                 return 3;
+            case FIVE:
+                return 5;
             default:
                 throw new IllegalArgumentException(loe + " not supported.");
         }
@@ -29,11 +29,11 @@ public class LoeAttributeConverter implements AttributeConverter<Loe, Integer> {
             return null;
         switch (integer){
             case 1:
-                return Loe.HIGH;
-            case 2:
-                return Loe.MEDIUM;
+                return Loe.ONE;
             case 3:
-                return Loe.LOW;
+                return Loe.THREE;
+            case 5:
+                return Loe.FIVE;
             default:
                 throw new IllegalArgumentException(integer + " not supported.");
         }

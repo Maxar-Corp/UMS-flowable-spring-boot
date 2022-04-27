@@ -83,9 +83,9 @@ class UmsTaskServiceTest {
         assertNotEquals(test.getDescription(), updated.getDescription());
         assertNotEquals(test.getAssignee(), updated.getAssignee());
         assertNotEquals(test.getRequester(), updated.getRequester());
-        assertNotEquals(test.getPriority().getValue(), updated.getPriority());
-        assertNotEquals(test.getStatus().status(), updated.getStatus());
-        assertNotEquals(test.getLoe().loe(), updated.getLoe());
+        assertNotEquals(test.getPriority().getPriority(), updated.getPriority());
+        assertNotEquals(test.getStatus().getStatus(), updated.getStatus());
+        assertNotEquals(test.getLoe().getValue(), updated.getLoe());
         assertNotEquals(test.getDueDate(), updated.getDueDate());
         assertNotEquals(test.getReceivedDate(), updated.getReceivedDate());
 

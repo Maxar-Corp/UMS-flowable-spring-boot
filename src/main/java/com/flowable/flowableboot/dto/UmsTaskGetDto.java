@@ -19,7 +19,7 @@ public class UmsTaskGetDto extends BaseDto {
     private String assignee;
 
     @JsonProperty("priority")
-    private int priority;
+    private String priority;
 
     @JsonProperty("dueDate")
     private LocalDateTime dueDate;
@@ -28,13 +28,31 @@ public class UmsTaskGetDto extends BaseDto {
     private LocalDateTime receivedDate;
 
     @JsonProperty("loe")
-    private String loe;
+    private int loe;
 
     @JsonProperty("status")
     private String status;
 
     @JsonProperty("description")
     private String description;
+
+    public UmsTaskGetDto() {
+    }
+
+    public UmsTaskGetDto(String process_instance_id, String name, String requester, String assignee,
+                         String priority, LocalDateTime dueDate, LocalDateTime receivedDate, int loe, String status,
+                         String description) {
+        this.process_instance_id = process_instance_id;
+        this.name = name;
+        this.requester = requester;
+        this.assignee = assignee;
+        this.priority = priority;
+        this.dueDate = dueDate;
+        this.receivedDate = receivedDate;
+        this.loe = loe;
+        this.status = status;
+        this.description = description;
+    }
 
     public String getProcess_instance_id() {
         return process_instance_id;
@@ -68,11 +86,11 @@ public class UmsTaskGetDto extends BaseDto {
         this.assignee = assignee;
     }
 
-    public int getPriority() {
+    public String getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(String priority) {
         this.priority = priority;
     }
 
@@ -92,11 +110,11 @@ public class UmsTaskGetDto extends BaseDto {
         this.receivedDate = receivedDate;
     }
 
-    public String getLoe() {
+    public int getLoe() {
         return loe;
     }
 
-    public void setLoe(String loe) {
+    public void setLoe(int loe) {
         this.loe = loe;
     }
 

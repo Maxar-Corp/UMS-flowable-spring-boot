@@ -24,10 +24,10 @@ class UmsTaskGetDtoTest {
         umsTaskGetDto.setName("test task");
         umsTaskGetDto.setRequester("requester");
         umsTaskGetDto.setAssignee("assignee");
-        umsTaskGetDto.setPriority(3);
+        umsTaskGetDto.setPriority("Medium");
         umsTaskGetDto.setDueDate(test);
         umsTaskGetDto.setReceivedDate(test);
-        umsTaskGetDto.setLoe("Medium");
+        umsTaskGetDto.setLoe(3);
         umsTaskGetDto.setStatus("Complete");
         umsTaskGetDto.setDescription("Test task for use.");
 
@@ -36,10 +36,10 @@ class UmsTaskGetDtoTest {
         assertInstanceOf(String.class, umsTaskGetDto.getName());
         assertInstanceOf(String.class, umsTaskGetDto.getRequester());
         assertInstanceOf(String.class, umsTaskGetDto.getAssignee());
-        assertInstanceOf(Integer.class, umsTaskGetDto.getPriority());
+        assertInstanceOf(String.class, umsTaskGetDto.getPriority());
         assertInstanceOf(LocalDateTime.class, umsTaskGetDto.getDueDate());
         assertInstanceOf(LocalDateTime.class, umsTaskGetDto.getReceivedDate());
-        assertInstanceOf(String.class, umsTaskGetDto.getLoe());
+        assertInstanceOf(Integer.class, umsTaskGetDto.getLoe());
         assertInstanceOf(String.class, umsTaskGetDto.getStatus());
         assertInstanceOf(String.class, umsTaskGetDto.getDescription());
 
@@ -48,10 +48,10 @@ class UmsTaskGetDtoTest {
         assertEquals("test task", umsTaskGetDto.getName());
         assertEquals("requester", umsTaskGetDto.getRequester());
         assertEquals("assignee", umsTaskGetDto.getAssignee());
-        assertEquals(3, umsTaskGetDto.getPriority());
+        assertEquals("Medium", umsTaskGetDto.getPriority());
         assertEquals(test, umsTaskGetDto.getDueDate());
         assertEquals(test, umsTaskGetDto.getReceivedDate());
-        assertEquals("Medium", umsTaskGetDto.getLoe());
+        assertEquals(3, umsTaskGetDto.getLoe());
         assertEquals("Complete", umsTaskGetDto.getStatus());
         assertEquals("Test task for use.", umsTaskGetDto.getDescription());
     }

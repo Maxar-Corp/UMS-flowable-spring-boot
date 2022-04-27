@@ -83,7 +83,7 @@ public class generateUmsTasks {
 
         Random rand = new Random();
 
-        File file = new File("./src/main/resources/testUmsTasks_2.json");
+        File file = new File("./src/main/resources/testUmsTasks.json");
 
         FileWriter fw = new FileWriter(file, true);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -112,11 +112,11 @@ public class generateUmsTasks {
                     taskName,
                     requesterNames.get(rand.nextInt(requesterNames.size())),
                     assigneeName.get(rand.nextInt(assigneeName.size())),
-                    priorityList[rand.nextInt(priorityList.length)].getValue(),
+                    priorityList[rand.nextInt(priorityList.length)].getPriority(),
                     dDate,
                     recDate,
-                    loeList[rand.nextInt(loeList.length)].loe(),
-                    statusList[rand.nextInt(statusList.length)].status(),
+                    loeList[rand.nextInt(loeList.length)].getValue(),
+                    statusList[rand.nextInt(statusList.length)].getStatus(),
                     description.get(rand.nextInt(description.size()))
             );
 

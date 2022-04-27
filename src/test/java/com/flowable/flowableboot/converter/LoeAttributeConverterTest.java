@@ -11,13 +11,13 @@ class LoeAttributeConverterTest {
 
     @Test
     void convertToDatabaseColumn() {
-        Integer high = loeAttributeConverter.convertToDatabaseColumn(Loe.HIGH);
-        Integer medium = loeAttributeConverter.convertToDatabaseColumn(Loe.MEDIUM);
-        Integer low = loeAttributeConverter.convertToDatabaseColumn(Loe.LOW);
+        Integer one = loeAttributeConverter.convertToDatabaseColumn(Loe.ONE);
+        Integer three = loeAttributeConverter.convertToDatabaseColumn(Loe.THREE);
+        Integer five = loeAttributeConverter.convertToDatabaseColumn(Loe.FIVE);
 
-        assertEquals(1, high);
-        assertEquals(2, medium);
-        assertEquals(3, low);
+        assertEquals(1, one);
+        assertEquals(3, three);
+        assertEquals(5, five);
     }
 
     @Test
@@ -27,13 +27,13 @@ class LoeAttributeConverterTest {
 
     @Test
     void convertToEntityAttribute() {
-        Loe high = loeAttributeConverter.convertToEntityAttribute(1);
-        Loe medium = loeAttributeConverter.convertToEntityAttribute(2);
-        Loe low = loeAttributeConverter.convertToEntityAttribute(3);
+        Loe one = loeAttributeConverter.convertToEntityAttribute(1);
+        Loe three = loeAttributeConverter.convertToEntityAttribute(3);
+        Loe five = loeAttributeConverter.convertToEntityAttribute(5);
 
-        assertEquals(Loe.HIGH, high);
-        assertEquals(Loe.MEDIUM, medium);
-        assertEquals(Loe.LOW, low);
+        assertEquals(Loe.ONE, one);
+        assertEquals(Loe.THREE, three);
+        assertEquals(Loe.FIVE, five);
     }
 
     @Test

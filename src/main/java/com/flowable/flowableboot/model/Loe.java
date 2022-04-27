@@ -4,28 +4,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Loe {
-    HIGH("High"),
-    MEDIUM("Medium"),
-    LOW("Low");
+    ONE(1),
+    THREE(3),
+    FIVE(5);
 
-    public final String loe;
-    private static final Map<String, Loe> map = new HashMap<String, Loe>();
+    public final int value;
+    private static final Map map = new HashMap<>();
+
+    private Loe(int value){
+        this.value = value;
+    }
 
     static {
-        for (Loe l: values()){
-            map.put(l.loe, l);
+        for (Loe l: Loe.values()){
+            map.put(l.value, l);
         }
     }
 
-    private Loe(String loe) {
-        this.loe = loe;
+
+    public static Loe valueOf(int loe){
+        return (Loe) map.get(loe);
     }
 
-    public String loe() {
-        return loe;
-    }
-
-    public static Loe valueOfLoe(String loe){
-        return map.get(loe);
+    public int getValue() {
+        return value;
     }
 }

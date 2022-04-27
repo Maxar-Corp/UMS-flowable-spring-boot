@@ -25,10 +25,10 @@ class UmsTaskTest {
         umsTask.setName("test task");
         umsTask.setRequester("requester");
         umsTask.setAssignee("assignee");
-        umsTask.setPriority(Priority.FIRST);
+        umsTask.setPriority(Priority.HIGH);
         umsTask.setDueDate(test);
         umsTask.setReceivedDate(test);
-        umsTask.setLoe(Loe.HIGH);
+        umsTask.setLoe(Loe.ONE);
         umsTask.setStatus(Status.IN_PROGRESS);
         umsTask.setDescription("Test task for use.");
         umsTask.setCreatedDate(testBase);
@@ -53,10 +53,10 @@ class UmsTaskTest {
         assertEquals("test task", umsTask.getName());
         assertEquals("requester", umsTask.getRequester());
         assertEquals("assignee", umsTask.getAssignee());
-        assertEquals(Priority.FIRST, umsTask.getPriority());
+        assertEquals(Priority.HIGH, umsTask.getPriority());
         assertEquals(test, umsTask.getDueDate());
         assertEquals(test, umsTask.getReceivedDate());
-        assertEquals(Loe.HIGH, umsTask.getLoe());
+        assertEquals(Loe.ONE, umsTask.getLoe());
         assertEquals(Status.IN_PROGRESS, umsTask.getStatus());
         assertEquals("Test task for use.", umsTask.getDescription());
         assertEquals(testBase, umsTask.getCreatedDate());
@@ -76,10 +76,10 @@ class UmsTaskTest {
                 "task name",
                 "requester",
                 "assignee",
-                Priority.FIRST,
+                Priority.HIGH,
                 test,
                 test,
-                Loe.HIGH,
+                Loe.ONE,
                 Status.IN_PROGRESS,
                 "description of task."
         );
@@ -92,10 +92,10 @@ class UmsTaskTest {
                 "task name",
                 "requester",
                 "assignee",
-                Priority.FIRST,
+                Priority.HIGH,
                 test,
                 test,
-                Loe.HIGH,
+                Loe.ONE,
                 Status.IN_PROGRESS,
                 "description of task."
         );
