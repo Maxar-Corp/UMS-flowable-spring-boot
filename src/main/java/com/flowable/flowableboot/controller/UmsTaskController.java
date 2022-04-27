@@ -68,7 +68,7 @@ public class UmsTaskController {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         if(umsTaskService.createUmsTask(umsTaskPostDto) == null){
-            throw new RuntimeException("UmsTask was not created.");
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
