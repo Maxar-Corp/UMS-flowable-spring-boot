@@ -30,9 +30,7 @@ public class UmsTaskService {
      *
      * @param umsTaskPostDto umsTaskPostDto
      *
-     * @return No return
-     *
-     * @exception RuntimeException if associated process id is not verified
+     * @return UmsTask for verification in controller
      */
     public UmsTask createUmsTask(UmsTaskPostDto umsTaskPostDto){
               return umsTaskRepository.save(mapStructMapper.umsTaskPostDtoToUmsTask(umsTaskPostDto));
@@ -60,7 +58,7 @@ public class UmsTaskService {
     }
 
     /**
-     * Return Iterahble of all UmsTasks
+     * Return List of all UmsTasks
      * @return all UmsTasks
      */
     public List<UmsTaskGetDto> getAllUmsTasks(){
