@@ -7,7 +7,9 @@ import com.flowable.flowableboot.FlowablebootApplication;
 import com.flowable.flowableboot.dto.UmsTaskGetDto;
 import com.flowable.flowableboot.service.UmsTaskService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,13 +32,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = FlowablebootApplication.class)
 @AutoConfigureMockMvc
-@TestPropertySource(
-        locations = "classpath:application.properties")
 class UmsTaskControllerUnitTest {
 
     @Autowired
